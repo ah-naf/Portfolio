@@ -1,32 +1,35 @@
 import React from "react";
 import { BookOpen, ExternalLink } from "lucide-react";
+import { mediumPosts } from "../data/portfolioData";
 
 const BlogSection = () => {
   return (
-    <section className="rounded-3xl bg-black/25 backdrop-blur-2xl ring-1 ring-white/10 p-6 md:p-8 text-white/90">
+    <section
+      id="blog"
+      className="rounded-3xl bg-black/25 backdrop-blur-2xl ring-1 ring-white/10 p-6 md:p-8 text-white/90"
+    >
       <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
         <BookOpen className="text-blue-400" />
         Blog & Writing
       </h2>
-      <div className="text-center py-10">
-        <BookOpen size={56} className="mx-auto text-blue-300 mb-4" />
-        <h3 className="text-xl font-semibold mb-3">Medium Blog</h3>
-        <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-          I regularly share insights about competitive programming, software
-          development, and technology trends on Medium. My articles cover
-          algorithmic problem-solving techniques, programming best practices,
-          and project development experiences.
-        </p>
-        <a
-          href="https://medium.com/@sheikhahnafshifat"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-blue-600 text-white hover:shadow-lg hover:shadow-emerald-900/30 transition text-base font-medium"
-        >
-          <ExternalLink size={18} />
-          Visit My Medium Blog
-        </a>
-        <p className="text-white/60 mt-3">@sheikhahnafshifat</p>
+      <div className="grid sm:grid-cols-1 gap-6">
+        {mediumPosts.map((post) => (
+          <a
+            key={post.link}
+            href={post.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-2xl p-5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition"
+          >
+            <h3 className="text-lg font-semibold mb-2 line-clamp-2">
+              {post.title}
+            </h3>
+            <div className="mt-3 inline-flex items-center gap-2 text-blue-300">
+              <ExternalLink size={16} />
+              <span className="text-sm">Read on Medium</span>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   );
