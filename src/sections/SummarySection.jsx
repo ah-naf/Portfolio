@@ -18,12 +18,6 @@ const SummarySection = () => {
             problems across various online judges and achieved notable rankings
             in programming contests.
           </p>
-          <p className="text-white/80 leading-relaxed">
-            My expertise spans from low-level programming in C/C++ to modern web
-            development with React and Go. I'm particularly interested in making
-            programming more accessible through innovative projects like Borno,
-            a Bangla-based programming language.
-          </p>
         </div>
         <div>
           <h3 className="text-lg font-semibold text-blue-300 mb-3">
