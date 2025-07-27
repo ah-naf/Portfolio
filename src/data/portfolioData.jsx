@@ -3,14 +3,14 @@ import { BookOpen, Code, Trophy, Github, Star } from "lucide-react";
 
 export const profile = {
   name: "Ahnaf Hasan Shifat",
-  title: "Computer Science Engineer & Competitive Programmer",
+  title: "Programmer & Problem Solver",
   email: "sheikhahnafshifat@gmail.com",
   phoneDisplay: "+880 1639 236 879",
   phoneRaw: "+8801639236879",
   links: {
-    linkedin: "#",
-    github: "#",
-    blog: "#",
+    linkedin: "https://linkedin.com/in/ahnafhasan144",
+    github: "https://github.com/ah-naf",
+    blog: "https://medium.com/@sheikhahnafshifat",
   },
 };
 
@@ -27,10 +27,6 @@ export const navSections = [
   { id: "blog", label: "Blog", icon: <BookOpen size={18} /> },
 ];
 
-/**
- * Competitive coding profiles & meta
- * - totalSolvedAllOJ refers to combined problems solved across all OJs (not just Codeforces).
- */
 export const competitiveProfiles = {
   codeforces: {
     handle: "ah_naf",
@@ -50,10 +46,6 @@ export const competitiveProfiles = {
   totalSolvedAllOJ: 2500,
 };
 
-/**
- * Contest history (full list provided, including onsite + online as specified)
- * Each item: name, position, type, team, url, highlight?
- */
 export const contestHistory = [
   {
     name: "CoU IT Fest Programming Contest",
@@ -163,10 +155,6 @@ export const contestHistory = [
   },
 ];
 
-/**
- * Updated projects with 'highlights' (array of strings)
- * Keys: name, summary, description, impact, tools, github, video, highlights
- */
 export const projects = [
   {
     name: "Merkle‑Chunk File Transfer",
