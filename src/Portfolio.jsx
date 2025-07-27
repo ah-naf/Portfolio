@@ -40,7 +40,9 @@ const Portfolio = () => {
 
           {/* Right: Active content */}
           <main className="lg:col-span-8 xl:col-span-9">
-            {activeSection === "summary" && <SummarySection />}
+            {activeSection === "summary" && (
+              <SummarySection setActiveSection={setActiveSection} />
+            )}
             {activeSection === "experience" && <ExperienceSection />}
             {activeSection === "competitive" && <CompetitiveSection />}
             {activeSection === "projects" && <ProjectsSection />}
