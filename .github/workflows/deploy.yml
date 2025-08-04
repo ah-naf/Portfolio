@@ -2,7 +2,8 @@ name: Build & Deploy Portfolio
 
 on:
   push:
-    branches: [main]
+    branches:
+      - origin
 
 jobs:
   build-deploy:
