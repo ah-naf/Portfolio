@@ -3,6 +3,10 @@ import { BookOpen, Code, Trophy, Github, Star } from "lucide-react";
 
 export const mediumPosts = [
   {
+    title: "Rate Limiting 101: Implementing in Go",
+    link: "https://medium.com/@sheikhahnafshifat/rate-limiting-101-implementing-in-go-c434675f1fbe",
+  },
+  {
     title: "Merkle Tree 201: Building a Go CLI to Verify Directory",
     link: "https://medium.com/@sheikhahnafshifat/merkle-proofs-201-building-a-go-cli-to-verify-directory-7f02da1e15fd",
   },
