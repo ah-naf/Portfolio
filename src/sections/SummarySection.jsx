@@ -14,6 +14,7 @@ import {
   MapPin,
 } from "lucide-react";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { competitiveProfiles, experienceData } from "../data/portfolioData";
 
 function getCurrentRole(exps) {
@@ -57,39 +58,90 @@ function getCurrentRole(exps) {
   })[0];
 }
 
+// --- Framer Motion variants ---
+const sectionVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
+
+const gridStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 14, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const hoverLift = {
+  hover: {
+    y: -4,
+    scale: 1.01,
+    transition: { type: "spring", stiffness: 280, damping: 18 },
+  },
+  tap: { scale: 0.99 },
+};
+
 const SummarySection = ({ setActiveSection }) => {
   const { totalSolvedAllOJ, codeforces, codechef } = competitiveProfiles;
   const tech = ["Go", "React", "Node.js", "PostgreSQL", "Docker"];
-
   const current = getCurrentRole(experienceData);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="rounded-3xl bg-black/25 backdrop-blur-2xl ring-1 ring-white/10 p-6 md:p-8 text-white/90">
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={sectionVariants}
+      className="rounded-3xl bg-black/25 backdrop-blur-2xl ring-1 ring-white/10 p-6 md:p-8 text-white/90"
+    >
       <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
         <BookOpen className="text-blue-400" />
         Summary
       </h2>
 
-      <div className="grid xl:grid-cols-3 gap-6">
+      <motion.div
+        variants={gridStagger}
+        initial="hidden"
+        animate="visible"
+        className="grid xl:grid-cols-3 gap-6"
+      >
         {/* Left: About + Current Job + Current Focus */}
         <div className="xl:col-span-2 space-y-6">
           {/* About */}
-          <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
+          <motion.div
+            variants={cardVariants}
+            whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+            whileTap={hoverLift.tap}
+            className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5"
+          >
             <h3 className="text-lg font-semibold text-blue-300 mb-3">
               About Me
             </h3>
             <p className="text-white/80 leading-relaxed">
               I'm a passionate Computer Science Engineer specializing in
-              competitive programming and full‑stack development. With a strong
+              competitive programming and full-stack development. With a strong
               foundation in algorithms and data structures, I've solved over{" "}
               {totalSolvedAllOJ}+ problems across online judges and achieved
               notable contest rankings.
             </p>
-          </div>
+          </motion.div>
 
           {/* Current Job */}
           {current && (
-            <div className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 ring-1 ring-white/10 p-5">
+            <motion.div
+              variants={cardVariants}
+              whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+              whileTap={hoverLift.tap}
+              className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 ring-1 ring-white/10 p-5"
+            >
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                 <div>
                   <div className="flex flex-wrap items-center gap-2 text-white/80">
@@ -116,33 +168,45 @@ const SummarySection = ({ setActiveSection }) => {
                     </span>
                   </div>
                 </div>
-                <button
+                <motion.button
                   onClick={() => setActiveSection("experience")}
                   className="inline-flex items-center gap-2 self-start rounded-lg bg-white/10 px-3 py-2 text-sm ring-1 ring-white/15 hover:bg-white/15"
+                  whileHover={prefersReducedMotion ? undefined : { x: 2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   View <ArrowRight size={16} />
-                </button>
+                </motion.button>
               </div>
               {current.tech?.length ? (
                 <div className="mt-4 flex flex-wrap gap-2">
                   {current.tech.slice(0, 6).map((t) => (
-                    <span
+                    <motion.span
                       key={t}
                       className="inline-flex items-center rounded-full bg-blue-500/10 px-2.5 py-1 text-xs text-blue-300 ring-1 ring-inset ring-blue-300/20"
+                      whileHover={
+                        prefersReducedMotion ? undefined : { scale: 1.05 }
+                      }
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20,
+                      }}
                     >
                       {t}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               ) : null}
-            </div>
+            </motion.div>
           )}
 
           {/* Quick Stats */}
           <div className="grid sm:grid-cols-3 gap-4">
-            <button
+            <motion.button
               onClick={() => setActiveSection("competitive")}
               className="text-left rounded-2xl p-5 ring-1 ring-white/10 bg-gradient-to-br from-blue-500/10 to-purple-500/10 hover:bg-white/10 transition"
+              whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+              whileTap={hoverLift.tap}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-white/60">
@@ -152,11 +216,13 @@ const SummarySection = ({ setActiveSection }) => {
               </div>
               <div className="text-2xl font-bold">{totalSolvedAllOJ}+</div>
               <div className="mt-1 text-white/70 text-sm">See profiles →</div>
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               onClick={() => setActiveSection("competitive")}
               className="text-left rounded-2xl p-5 ring-1 ring-white/10 bg-gradient-to-br from-amber-500/10 to-red-500/10 hover:bg-white/10 transition"
+              whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+              whileTap={hoverLift.tap}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-white/60">Codeforces Max</span>
@@ -166,11 +232,13 @@ const SummarySection = ({ setActiveSection }) => {
               <div className="mt-1 text-white/70 text-sm">
                 {codeforces.rankTitle}
               </div>
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               onClick={() => setActiveSection("competitive")}
               className="text-left rounded-2xl p-5 ring-1 ring-white/10 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 hover:bg-white/10 transition"
+              whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+              whileTap={hoverLift.tap}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-white/60">CodeChef</span>
@@ -180,11 +248,16 @@ const SummarySection = ({ setActiveSection }) => {
               <div className="mt-1 text-white/70 text-sm">
                 Max {codechef.maxRating}
               </div>
-            </button>
+            </motion.button>
           </div>
 
-          {/* Currently working on (moved below current job) */}
-          <div className="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5">
+          {/* Currently working on */}
+          <motion.div
+            variants={cardVariants}
+            whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+            whileTap={hoverLift.tap}
+            className="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5"
+          >
             <div className="flex items-center gap-2 mb-2">
               <Rocket size={18} className="text-emerald-300" />
               <h3 className="text-lg font-semibold text-emerald-300">
@@ -195,13 +268,18 @@ const SummarySection = ({ setActiveSection }) => {
               <li>Learning Golang.</li>
               <li>Learning System Design.</li>
             </ul>
-          </div>
+          </motion.div>
         </div>
 
         {/* Right column: Education + Tech + CTAs */}
         <div className="space-y-6">
           {/* Education */}
-          <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
+          <motion.div
+            variants={cardVariants}
+            whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+            whileTap={hoverLift.tap}
+            className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5"
+          >
             <h3 className="text-lg font-semibold text-blue-300 mb-3">
               Education
             </h3>
@@ -219,11 +297,16 @@ const SummarySection = ({ setActiveSection }) => {
               <Award size={16} className="mr-2" />
               CGPA: 3.30 out of 4.00
             </div>
-          </div>
+          </motion.div>
 
           {/* Tech chips with tooltips */}
           <Tooltip.Provider delayDuration={150}>
-            <div className="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5">
+            <motion.div
+              variants={cardVariants}
+              whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+              whileTap={hoverLift.tap}
+              className="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5"
+            >
               <h3 className="text-lg font-semibold text-blue-300 mb-3">
                 Core Tech
               </h3>
@@ -231,9 +314,19 @@ const SummarySection = ({ setActiveSection }) => {
                 {tech.map((t) => (
                   <Tooltip.Root key={t}>
                     <Tooltip.Trigger asChild>
-                      <span className="px-3 py-1 rounded-lg text-sm ring-1 ring-blue-400/30 bg-gradient-to-r from-blue-500/15 to-purple-500/15 hover:bg-white/10 cursor-default">
+                      <motion.span
+                        className="px-3 py-1 rounded-lg text-sm ring-1 ring-blue-400/30 bg-gradient-to-r from-blue-500/15 to-purple-500/15 hover:bg-white/10 cursor-default"
+                        whileHover={
+                          prefersReducedMotion ? undefined : { scale: 1.05 }
+                        }
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 20,
+                        }}
+                      >
                         {t}
-                      </span>
+                      </motion.span>
                     </Tooltip.Trigger>
                     <Tooltip.Content
                       side="top"
@@ -245,33 +338,44 @@ const SummarySection = ({ setActiveSection }) => {
                   </Tooltip.Root>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </Tooltip.Provider>
 
           {/* CTAs */}
-          <div className="rounded-2xl p-5 ring-1 ring-white/10 bg-gradient-to-br from-blue-600/10 to-purple-600/10">
+          <motion.div
+            variants={cardVariants}
+            whileHover={prefersReducedMotion ? undefined : hoverLift.hover}
+            whileTap={hoverLift.tap}
+            className="rounded-2xl p-5 ring-1 ring-white/10 bg-gradient-to-br from-blue-600/10 to-purple-600/10"
+          >
             <div className="grid grid-cols-1 gap-3">
-              <button
+              <motion.button
                 onClick={() => setActiveSection("projects")}
                 className="w-full inline-flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition"
+                whileHover={prefersReducedMotion ? undefined : { x: 2 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <span className="font-medium">Explore Projects</span>
                 <ArrowRight size={18} />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 onClick={() => setActiveSection("competitive")}
                 className="w-full inline-flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition"
+                whileHover={prefersReducedMotion ? undefined : { x: 2 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <span className="font-medium">See Contest History</span>
                 <ArrowRight size={18} />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 onClick={() => setActiveSection("blog")}
                 className="w-full inline-flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition"
+                whileHover={prefersReducedMotion ? undefined : { x: 2 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <span className="font-medium">Read Blog</span>
                 <ArrowRight size={18} />
-              </button>
+              </motion.button>
             </div>
 
             {/* Resume + Email */}
@@ -284,18 +388,20 @@ const SummarySection = ({ setActiveSection }) => {
                 <FileDown size={16} />
                 Resume
               </a>
-              <a
+              <motion.a
                 href="mailto:sheikhahnafshifat@gmail.com"
                 className="px-3 py-2 rounded-lg bg-white/10 text-white inline-flex items-center gap-2 hover:bg-white/15 transition text-sm"
+                whileHover={prefersReducedMotion ? undefined : { x: 2 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Mail size={16} />
                 Email Me
-              </a>
+              </motion.a>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 
