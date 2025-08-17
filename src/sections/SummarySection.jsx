@@ -7,18 +7,61 @@ import {
   Star,
   Code2,
   Rocket,
-  ExternalLink,
   FileDown,
   ArrowRight,
   Mail,
+  Building2,
+  MapPin,
 } from "lucide-react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { competitiveProfiles } from "../data/portfolioData";
+import { competitiveProfiles, experienceData } from "../data/portfolioData";
+
+function getCurrentRole(exps) {
+  const roles = exps.flatMap((c) =>
+    c.roles.map((r) => ({ ...r, company: c.company }))
+  );
+  const present = roles.filter(
+    (r) => String(r.end).toLowerCase() === "present"
+  );
+  const ref = present.length ? present : roles;
+  const monthIndex = (m) =>
+    [
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "may",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "oct",
+      "nov",
+      "dec",
+    ].indexOf(String(m).slice(0, 3).toLowerCase());
+  const parseMY = (s) => {
+    if (!s) return { y: -Infinity, m: -1 };
+    const cleaned = String(s)
+      .replace(/\u00A0/g, " ")
+      .trim();
+    const [m, y] = cleaned.split(/\s+/);
+    const mi = monthIndex(m);
+    const yi = parseInt(y, 10);
+    return { y: isNaN(yi) ? -Infinity : yi, m: mi < 0 ? -1 : mi };
+  };
+  return ref.slice().sort((a, b) => {
+    const A = parseMY(a.start);
+    const B = parseMY(b.start);
+    if (A.y !== B.y) return B.y - A.y;
+    return B.m - A.m;
+  })[0];
+}
 
 const SummarySection = ({ setActiveSection }) => {
   const { totalSolvedAllOJ, codeforces, codechef } = competitiveProfiles;
-
   const tech = ["Go", "React", "Node.js", "PostgreSQL", "Docker"];
+
+  const current = getCurrentRole(experienceData);
 
   return (
     <section className="rounded-3xl bg-black/25 backdrop-blur-2xl ring-1 ring-white/10 p-6 md:p-8 text-white/90">
@@ -28,7 +71,7 @@ const SummarySection = ({ setActiveSection }) => {
       </h2>
 
       <div className="grid xl:grid-cols-3 gap-6">
-        {/* Left: About + Education */}
+        {/* Left: About + Current Job + Current Focus */}
         <div className="xl:col-span-2 space-y-6">
           {/* About */}
           <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5">
@@ -43,6 +86,57 @@ const SummarySection = ({ setActiveSection }) => {
               notable contest rankings.
             </p>
           </div>
+
+          {/* Current Job */}
+          {current && (
+            <div className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 ring-1 ring-white/10 p-5">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 text-white/80">
+                    <h3 className="text-lg md:text-xl font-semibold text-white">
+                      {current.title}
+                    </h3>
+                    <span className="text-white/40">•</span>
+                    <span className="text-purple-300/90 font-medium">
+                      {current.company?.name}
+                    </span>
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-white/70">
+                    <span className="inline-flex items-center gap-2">
+                      <Calendar size={16} className="text-blue-300" />
+                      {current.start} — {current.end}
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                      <MapPin size={16} className="text-green-300" />{" "}
+                      {current.location}
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                      <Building2 size={16} className="text-sky-300" />{" "}
+                      {current.type}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setActiveSection("experience")}
+                  className="inline-flex items-center gap-2 self-start rounded-lg bg-white/10 px-3 py-2 text-sm ring-1 ring-white/15 hover:bg-white/15"
+                >
+                  View <ArrowRight size={16} />
+                </button>
+              </div>
+              {current.tech?.length ? (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {current.tech.slice(0, 6).map((t) => (
+                    <span
+                      key={t}
+                      className="inline-flex items-center rounded-full bg-blue-500/10 px-2.5 py-1 text-xs text-blue-300 ring-1 ring-inset ring-blue-300/20"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          )}
 
           {/* Quick Stats */}
           <div className="grid sm:grid-cols-3 gap-4">
@@ -89,7 +183,7 @@ const SummarySection = ({ setActiveSection }) => {
             </button>
           </div>
 
-          {/* Current Focus */}
+          {/* Currently working on (moved below current job) */}
           <div className="rounded-2xl p-5 ring-1 ring-white/10 bg-white/5">
             <div className="flex items-center gap-2 mb-2">
               <Rocket size={18} className="text-emerald-300" />
