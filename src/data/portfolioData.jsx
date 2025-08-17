@@ -1,6 +1,7 @@
 export * from "./blogs";
 export * from "./projects";
 export * from "./skills";
+export * from "./experience";
 
 export const profile = {
   name: "Ahnaf Hasan Shifat",
