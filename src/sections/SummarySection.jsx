@@ -184,11 +184,11 @@ const SummarySection = ({ setActiveSection }) => {
             <div className="mt-4 flex items-center gap-2">
               <a
                 href="/Ahnaf_Hasan_Shifat.pdf"
-                className="px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white inline-flex items-center gap-2 hover:shadow-lg hover:shadow-purple-900/30 transition text-sm"
+                className="px-3 py-2 flex-1 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white inline-flex items-center gap-2 hover:shadow-lg hover:shadow-purple-900/30 transition text-sm"
                 target="_blank"
               >
                 <FileDown size={16} />
-                Download Resume
+                Resume
               </a>
               <a
                 href="mailto:sheikhahnafshifat@gmail.com"

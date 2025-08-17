@@ -1,6 +1,19 @@
 import React from "react";
-import { Mail, Phone, Linkedin, Github, BookOpen } from "lucide-react";
-import { navSections, profile } from "../data/portfolioData";
+import { Mail, Phone, Linkedin, Github, BookOpen, Code, Star, Trophy } from "lucide-react";
+import { profile } from "../data/portfolioData";
+
+const NAV_SECTIONS = [
+  { id: "summary", label: "Summary", icon: <BookOpen size={18} /> },
+  { id: "experience", label: "Experience", icon: <Code size={18} /> },
+  {
+    id: "competitive",
+    label: "Competitive Programming",
+    icon: <Trophy size={18} />,
+  },
+  { id: "projects", label: "Projects", icon: <Github size={18} /> },
+  { id: "skills", label: "Skills", icon: <Star size={18} /> },
+  { id: "blog", label: "Blog", icon: <BookOpen size={18} /> },
+];
 
 const Sidebar = ({ activeSection, setActiveSection }) => {
   return (
@@ -53,7 +66,7 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
         {/* Navigation card */}
         <nav className="rounded-3xl bg-black/25 backdrop-blur-xl ring-1 ring-white/10 p-3">
           <div className="grid grid-cols-2 md:grid-cols-1 gap-2">
-            {navSections.map((s) => {
+            {NAV_SECTIONS.map((s) => {
               const active = activeSection === s.id;
               return (
                 <button

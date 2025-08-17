@@ -1,6 +1,3 @@
-import React from "react";
-import { BookOpen, Code, Trophy, Github, Star } from "lucide-react";
-
 export const mediumPosts = [
   {
     title: "Rate Limiting 101: Implementing in Go",
@@ -248,19 +245,6 @@ export const profile = {
     blog: "https://medium.com/@sheikhahnafshifat",
   },
 };
-
-export const navSections = [
-  { id: "summary", label: "Summary", icon: <BookOpen size={18} /> },
-  { id: "experience", label: "Experience", icon: <Code size={18} /> },
-  {
-    id: "competitive",
-    label: "Competitive Programming",
-    icon: <Trophy size={18} />,
-  },
-  { id: "projects", label: "Projects", icon: <Github size={18} /> },
-  { id: "skills", label: "Skills", icon: <Star size={18} /> },
-  { id: "blog", label: "Blog", icon: <BookOpen size={18} /> },
-];
 
 export const competitiveProfiles = {
   codeforces: {
