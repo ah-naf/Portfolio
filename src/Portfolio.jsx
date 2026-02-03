@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LetterGlitch from "./components/LetterGlitch";
+import ThreeBackground from "./components/ThreeBackground";
 import TopBar from "./components/TopBar";
 import SummarySection from "./sections/SummarySection";
 import ExperienceSection from "./sections/ExperienceSection";
@@ -16,15 +16,8 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen relative">
-      {/* Background */}
-      <LetterGlitch
-        glitchColors={["#0b1220", "#132036", "#1d2e4a", "#254055", "#2f5168"]}
-        glitchSpeed={80}
-        outerVignette={true}
-        centerVignette={false}
-        smooth={true}
-        opacity={0.95}
-      />
+      {/* Three.js Background */}
+      <ThreeBackground />
 
       {/* Top bar */}
       <TopBar isVisible={isVisible} />

@@ -1,40 +1,50 @@
 import React from "react";
-import { Calendar, Building2, MapPin, Star } from "lucide-react";
-import { motion } from "framer-motion";
+import { Calendar, Building2, MapPin, Star, Briefcase, ChevronRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { experienceData } from "../data/experience";
 
-const Dot = ({ active = false }) => (
-  <div
-    className={`relative z-10 h-3 w-3 rounded-full ${
-      active
-        ? "bg-blue-400 ring-8 ring-blue-400/20"
-        : "bg-white/30 ring-8 ring-white/10"
-    }`}
-  />
-);
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+  },
+};
 
-const Pill = ({ children }) => (
-  <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
-    <Star size={14} className="opacity-70" /> {children}
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const Pill = ({ children, color = "white" }) => (
+  <span className={`inline-flex items-center gap-1 rounded-full bg-${color}/10 px-3 py-1 text-xs text-${color}/80 ring-1 ring-${color}/20`}>
+    <Star size={12} className="opacity-70" /> {children}
   </span>
 );
 
 const TechTag = ({ children }) => (
-  <span className="inline-flex items-center rounded-full bg-blue-500/10 px-2.5 py-1 text-xs text-blue-300 ring-1 ring-inset ring-blue-300/20">
+  <motion.span
+    className="inline-flex items-center rounded-full bg-blue-500/10 px-3 py-1.5 text-xs text-blue-300 ring-1 ring-blue-500/20 hover:bg-blue-500/20 transition-colors cursor-default"
+    whileHover={{ scale: 1.05 }}
+  >
     {children}
-  </span>
+  </motion.span>
 );
 
 const LogoBadge = ({ name, logo }) => (
-  <div className="relative h-12 w-12 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 ring-1 ring-white/10">
+  <div className="relative h-14 w-14 overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 ring-1 ring-white/10">
     {logo ? (
       <img
         src={logo}
         alt={`${name} logo`}
-        className="h-full w-full object-contain"
+        className="h-full w-full object-contain p-1"
       />
     ) : (
-      <div className="flex h-full w-full items-center justify-center text-lg font-bold text-white/80">
+      <div className="flex h-full w-full items-center justify-center text-xl font-bold gradient-text">
         {name.slice(0, 1)}
       </div>
     )}
@@ -42,149 +52,137 @@ const LogoBadge = ({ name, logo }) => (
   </div>
 );
 
-const Header = ({ company }) => (
-  <div className="flex items-center gap-4">
-    <LogoBadge name={company.name} logo={company.logo} />
-    <div>
-      <div className="flex items-center gap-2 text-white/70">
-        <Building2 size={16} className="text-blue-300" />
-        <a
-          href={company.website}
-          target="_blank"
-          rel="noreferrer"
-          className="underline decoration-blue-400/40 underline-offset-4 hover:text-white"
-        >
-          {company.name}
-        </a>
-      </div>
-      <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white">
-        Experience
-      </h2>
-    </div>
-  </div>
-);
-
-const SingleCard = ({ role, company }) => (
+const TimelineDot = ({ active = false }) => (
   <motion.div
-    initial={{ opacity: 0, y: 12 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4, ease: "easeOut" }}
-    className="rounded-3xl bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-6 md:p-8 ring-1 ring-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
+    initial={{ scale: 0 }}
+    animate={{ scale: 1 }}
+    className={`relative z-10 h-4 w-4 rounded-full ${
+      active
+        ? "bg-gradient-to-r from-purple-500 to-blue-500"
+        : "bg-white/20"
+    }`}
+    style={active ? { boxShadow: "0 0 20px rgba(124, 58, 237, 0.5)" } : {}}
   >
-    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-      <div>
-        <div className="flex flex-wrap items-center gap-2 text-white/80">
-          <h3 className="text-xl md:text-2xl font-semibold text-white">
-            {role.title}
-          </h3>
-          <span className="text-white/40">•</span>
-          <span className="text-purple-300/90 font-medium">{company.name}</span>
-        </div>
-        <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-white/70">
-          <span className="inline-flex items-center gap-2">
-            <Calendar size={16} className="text-blue-300" />
-            {role.start} — {role.end}
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <MapPin size={16} className="text-green-300" /> {role.location}
-          </span>
-          <Pill>{role.type}</Pill>
-        </div>
-      </div>
-    </div>
-
-    <ul className="mt-6 grid gap-3 text-white/80">
-      {role.highlights.map((h, i) => (
-        <li key={i} className="flex items-start gap-3">
-          <span className="mt-2 h-2 w-2 rounded-full bg-blue-400" />
-          <span>{h}</span>
-        </li>
-      ))}
-    </ul>
-
-    <div className="mt-6 flex flex-wrap gap-2">
-      {role.tech.map((t) => (
-        <TechTag key={t}>{t}</TechTag>
-      ))}
-    </div>
+    {active && (
+      <span className="absolute inset-0 rounded-full bg-purple-500 animate-ping opacity-50" />
+    )}
   </motion.div>
 );
 
-const Stepper = ({ roles }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 12 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4, ease: "easeOut" }}
-    className="relative"
-  >
-    <div className="absolute left-[5px] top-3 h-full w-px bg-gradient-to-b from-blue-400/40 via-white/10 to-transparent" />
-    <div className="space-y-8">
-      {roles.map((r, idx) => (
-        <div key={`${r.title}-${idx}`} className="relative pl-10">
-          <div className="absolute left-0 top-2">
-            <Dot active={idx === roles.length - 1} />
+const ExperienceCard = ({ role, company, isLast }) => {
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      variants={cardVariants}
+      className="relative rounded-2xl p-6 bg-white/5 ring-1 ring-white/10 hover:ring-purple-500/30 transition-all duration-300 card-hover"
+      whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+    >
+      <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+        <LogoBadge name={company.name} logo={company.logo} />
+        
+        <div className="flex-1">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <h3 className="text-lg font-bold text-white">{role.title}</h3>
+            <span className="text-white/30">•</span>
+            <a
+              href={company.website}
+              target="_blank"
+              rel="noreferrer"
+              className="text-purple-300 hover:text-purple-200 font-medium transition-colors"
+            >
+              {company.name}
+            </a>
           </div>
-          <div className="rounded-2xl bg-white/5 p-5 ring-1 ring-white/10">
-            <div className="flex flex-wrap items-center gap-2 text-sm text-white/70">
-              <span className="inline-flex items-center gap-2 text-white/90 font-semibold">
-                {r.title}
-              </span>
-              <span className="text-white/40">•</span>
-              <span className="inline-flex items-center gap-2">
-                <Calendar size={16} className="text-blue-300" /> {r.start} —{" "}
-                {r.end}
-              </span>
-              <span className="text-white/40">•</span>
-              <span className="inline-flex items-center gap-2">
-                <MapPin size={16} className="text-green-300" /> {r.location}
-              </span>
-              <span className="text-white/40">•</span>
-              <Pill>{r.type}</Pill>
+
+          <div className="flex flex-wrap items-center gap-3 text-sm text-white/60 mb-4">
+            <span className="inline-flex items-center gap-1.5">
+              <Calendar size={14} className="text-blue-400" />
+              {role.start} — {role.end}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <MapPin size={14} className="text-green-400" />
+              {role.location}
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 text-xs">
+              {role.type}
+            </span>
+          </div>
+
+          {role.highlights?.length > 0 && (
+            <ul className="space-y-2 mb-4">
+              {role.highlights.map((h, i) => (
+                <li key={i} className="flex items-start gap-3 text-white/70">
+                  <ChevronRight size={16} className="text-blue-400 mt-0.5 flex-shrink-0" />
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {role.tech?.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {role.tech.map((t) => (
+                <TechTag key={t}>{t}</TechTag>
+              ))}
             </div>
-            {r.highlights?.length ? (
-              <ul className="mt-4 grid gap-2 text-white/80">
-                {r.highlights.map((h, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-blue-400" />
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            {r.tech?.length ? (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {r.tech.map((t) => (
-                  <TechTag key={t}>{t}</TechTag>
-                ))}
-              </div>
-            ) : null}
-          </div>
+          )}
         </div>
-      ))}
-    </div>
-  </motion.div>
-);
+      </div>
+    </motion.div>
+  );
+};
 
 const ExperienceSection = () => {
   return (
-    <section className="rounded-3xl bg-[radial-gradient(1200px_500px_at_10%_-10%,rgba(56,189,248,0.08),transparent),radial-gradient(1200px_500px_at_90%_110%,rgba(147,51,234,0.08),transparent)] bg-black/25 backdrop-blur-2xl ring-1 ring-white/10 p-6 md:p-8 text-white/90">
-      <div className="flex flex-col gap-12">
-        {experienceData.map((exp, idx) => {
-          const useStepper = exp.roles.length > 1;
-          return (
-            <div key={idx} className="flex flex-col gap-6">
-              <Header company={exp.company} />
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={containerVariants}
+      className="rounded-3xl glass p-6 md:p-8 text-white/90"
+    >
+      {/* Header */}
+      <motion.div variants={cardVariants} className="flex items-center gap-3 mb-8">
+        <div className="relative">
+          <div className="absolute inset-0 bg-blue-500/30 blur-xl rounded-full" />
+          <div className="relative p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 ring-1 ring-white/10">
+            <Briefcase className="text-blue-400" size={24} />
+          </div>
+        </div>
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold gradient-text">Experience</h2>
+          <p className="text-sm text-white/50">My professional journey</p>
+        </div>
+      </motion.div>
 
-              {useStepper ? (
-                <Stepper roles={exp.roles} />
-              ) : (
-                <SingleCard role={exp.roles[0]} company={exp.company} />
-              )}
+      {/* Timeline */}
+      <div className="relative">
+        {/* Timeline line */}
+        <div className="absolute left-[7px] top-8 bottom-8 w-0.5 bg-gradient-to-b from-purple-500/50 via-blue-500/30 to-transparent hidden md:block" />
+
+        <div className="space-y-6">
+          {experienceData.map((exp, companyIdx) => (
+            <div key={companyIdx} className="space-y-4">
+              {exp.roles.map((role, roleIdx) => (
+                <div key={`${exp.company.name}-${roleIdx}`} className="relative md:pl-10">
+                  {/* Timeline dot */}
+                  <div className="absolute left-0 top-6 hidden md:block">
+                    <TimelineDot active={companyIdx === 0 && roleIdx === 0} />
+                  </div>
+
+                  <ExperienceCard
+                    role={role}
+                    company={exp.company}
+                    isLast={companyIdx === experienceData.length - 1 && roleIdx === exp.roles.length - 1}
+                  />
+                </div>
+              ))}
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

@@ -1,36 +1,23 @@
 import React from "react";
-import { Trophy, Code, Star, Users, ExternalLink } from "lucide-react";
+import { Trophy, Code, Star, Users, ExternalLink, Award, Zap } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { contestHistory, competitiveProfiles } from "../data/portfolioData";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (i = 1) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
-
-const containerStagger = {
-  hidden: {},
+const containerVariants = {
+  hidden: { opacity: 0 },
   visible: {
-    transition: { staggerChildren: 0.06 },
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 10, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45 } },
-};
-
-const hoverLift = {
-  hover: {
-    y: -4,
-    scale: 1.01,
-    transition: { type: "spring", stiffness: 260, damping: 18 },
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
-  tap: { scale: 0.99 },
 };
 
 const CompetitiveSection = () => {
@@ -42,27 +29,36 @@ const CompetitiveSection = () => {
     <motion.section
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={fadeInUp}
-      className="rounded-3xl bg-black/25 backdrop-blur-2xl ring-1 ring-white/10 p-6 md:p-8 text-white/90"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={containerVariants}
+      className="rounded-3xl glass p-6 md:p-8 text-white/90"
     >
-      {/* Header with StopStalk button at the top */}
+      {/* Header */}
       <motion.div
-        className="flex items-center justify-between mb-6"
-        variants={fadeInUp}
-        custom={0}
+        variants={cardVariants}
+        className="flex items-center justify-between mb-8"
       >
-        <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
-          <Trophy className="text-blue-400" />
-          Competitive Programming
-        </h2>
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <div className="absolute inset-0 bg-amber-500/30 blur-xl rounded-full" />
+            <div className="relative p-2 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 ring-1 ring-white/10">
+              <Trophy className="text-amber-400" size={24} />
+            </div>
+          </div>
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold gradient-text">
+              Competitive Programming
+            </h2>
+            <p className="text-sm text-white/50">Problem solving journey</p>
+          </div>
+        </div>
 
         <motion.a
           href={stopstalk.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white inline-flex items-center gap-2 hover:shadow-lg hover:shadow-purple-900/30 transition text-sm md:text-base"
-          whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
+          className="hidden sm:inline-flex px-4 py-2.5 rounded-xl btn-primary text-white items-center gap-2 text-sm font-medium"
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           <ExternalLink size={16} />
@@ -70,170 +66,137 @@ const CompetitiveSection = () => {
         </motion.a>
       </motion.div>
 
-      {/* Profiles summary */}
-      <motion.div
-        variants={containerStagger}
-        className="grid md:grid-cols-2 gap-6 mb-3"
-      >
-        {/* Codeforces */}
+      {/* Stats Overview */}
+      <motion.div variants={containerVariants} className="grid md:grid-cols-3 gap-4 mb-8">
+        {/* Total Problems */}
         <motion.div
           variants={cardVariants}
-          whileHover={hoverLift.hover}
-          whileTap={hoverLift.tap}
-          className="rounded-2xl p-6 ring-1 ring-orange-400/30 bg-gradient-to-br from-orange-500/15 to-red-500/15"
+          className="rounded-2xl p-5 bg-gradient-to-br from-purple-500/10 to-blue-500/10 ring-1 ring-white/10 hover:ring-purple-500/30 transition-all duration-300 card-hover"
+          whileHover={prefersReducedMotion ? undefined : { y: -4 }}
         >
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold flex items-center">
-              <Code className="mr-2 text-orange-300" />
-              Codeforces
-            </h3>
-            <motion.a
-              href={codeforces.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/70 hover:text-white inline-flex items-center gap-1 text-sm"
-              title={codeforces.handle}
-              whileHover={prefersReducedMotion ? undefined : { x: 2 }}
-              transition={{ type: "spring", stiffness: 300, damping: 18 }}
-            >
-              @{codeforces.handle}
-              <ExternalLink size={14} />
-            </motion.a>
+            <span className="text-sm text-white/50">Total Problems</span>
+            <Code size={18} className="text-purple-400" />
           </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-orange-300 font-bold text-lg">
-                {codeforces.rankTitle}
-              </p>
-              <p className="text-white/80">
-                Max Rating: {codeforces.maxRating}
-              </p>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-orange-300">
-                {totalSolvedAllOJ}+
-              </div>
-              <p className="text-white/80 text-sm">Problems Solved (All OJs)</p>
-            </div>
-          </div>
+          <div className="text-3xl font-bold gradient-text">{totalSolvedAllOJ}+</div>
+          <p className="text-sm text-white/60 mt-1">Across all platforms</p>
         </motion.div>
 
-        {/* CodeChef */}
-        <motion.div
+        {/* Codeforces */}
+        <motion.a
+          href={codeforces.url}
+          target="_blank"
+          rel="noopener noreferrer"
           variants={cardVariants}
-          whileHover={hoverLift.hover}
-          whileTap={hoverLift.tap}
-          className="rounded-2xl p-6 ring-1 ring-yellow-400/30 bg-gradient-to-br from-yellow-500/15 to-orange-500/15"
+          className="rounded-2xl p-5 bg-gradient-to-br from-orange-500/10 to-red-500/10 ring-1 ring-orange-500/20 hover:ring-orange-500/40 transition-all duration-300 card-hover"
+          whileHover={prefersReducedMotion ? undefined : { y: -4 }}
         >
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold flex items-center">
-              <Star className="mr-2 text-yellow-300" />
-              CodeChef
-            </h3>
-            <motion.a
-              href={codechef.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/70 hover:text-white inline-flex items-center gap-1 text-sm"
-              title={codechef.handle}
-              whileHover={prefersReducedMotion ? undefined : { x: 2 }}
-              transition={{ type: "spring", stiffness: 300, damping: 18 }}
-            >
-              @{codechef.handle}
-              <ExternalLink size={14} />
-            </motion.a>
+            <span className="text-sm text-white/50">Codeforces</span>
+            <span className="text-xs text-orange-300/70">@{codeforces.handle}</span>
           </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-yellow-300 font-bold text-lg">
-                {codechef.stars} Star
-              </p>
-              <p className="text-white/80">Max Rating: {codechef.maxRating}</p>
-            </div>
+          <div className="text-3xl font-bold text-orange-300">{codeforces.maxRating}</div>
+          <p className="text-sm text-orange-200/80 mt-1 flex items-center gap-1">
+            <Award size={14} />
+            {codeforces.rankTitle}
+          </p>
+        </motion.a>
+
+        {/* CodeChef */}
+        <motion.a
+          href={codechef.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          variants={cardVariants}
+          className="rounded-2xl p-5 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 ring-1 ring-yellow-500/20 hover:ring-yellow-500/40 transition-all duration-300 card-hover"
+          whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-white/50">CodeChef</span>
+            <span className="text-xs text-yellow-300/70">@{codechef.handle}</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-3xl font-bold text-yellow-300">
+            {codechef.stars}
             <div className="flex">
-              {[...Array(codechef.stars)].map((_, i) => (
-                <Star
-                  key={i}
-                  size={20}
-                  className="text-yellow-300 fill-current"
-                />
+              {[...Array(Math.min(codechef.stars, 5))].map((_, i) => (
+                <Star key={i} size={16} className="text-yellow-300 fill-current" />
               ))}
             </div>
           </div>
-        </motion.div>
+          <p className="text-sm text-yellow-200/80 mt-1">Max {codechef.maxRating}</p>
+        </motion.a>
       </motion.div>
 
       {/* Contest History */}
-      <motion.div className="mt-6" variants={fadeInUp} custom={2}>
-        <h3 className="text-lg font-semibold mb-4 flex items-center">
-          <Trophy className="mr-2 text-blue-300" />
-          Contest History
+      <motion.div variants={cardVariants}>
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <Zap size={18} className="text-cyan-400" />
+          <span className="gradient-text">Contest History</span>
         </h3>
 
         <motion.div
-          variants={containerStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          className="space-y-4"
+          variants={containerVariants}
+          className="space-y-3"
         >
-          <AnimatePresence>
-            {contestHistory.map((contest, i) => (
-              <motion.div
-                key={`${contest.name}-${i}`}
-                variants={cardVariants}
-                whileHover={hoverLift.hover}
-                whileTap={hoverLift.tap}
-                layout
-                className={`rounded-2xl p-4 transition ring-1 ${
-                  contest.highlight
-                    ? "bg-gradient-to-r from-yellow-500/15 to-orange-500/15 ring-yellow-400/40"
-                    : "bg-white/5 ring-white/10 hover:scale-[1.01]"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="min-w-0">
-                    <h4 className="font-semibold mb-1 truncate">
-                      {contest.url ? (
-                        <a
-                          href={contest.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:underline"
-                          title={contest.name}
-                        >
-                          {contest.name}
-                        </a>
-                      ) : (
-                        contest.name
-                      )}
-                    </h4>
-                    <div className="flex flex-wrap items-center gap-3 text-white/80 text-sm">
-                      <span className="flex items-center">
-                        <Users size={16} className="mr-2" />
-                        Team: {contest.team}
-                      </span>
-                      <span className="px-2 py-0.5 rounded-md bg-white/10 ring-1 ring-white/10">
-                        {contest.type}
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className={
-                      contest.highlight
-                        ? "text-yellow-300 text-right"
-                        : "text-blue-300 text-right"
-                    }
-                  >
-                    <div className="text-2xl font-bold">{contest.position}</div>
-                    <p className="text-sm">Position</p>
+          {contestHistory.map((contest, i) => (
+            <motion.div
+              key={`${contest.name}-${i}`}
+              variants={cardVariants}
+              className={`group rounded-2xl p-4 transition-all duration-300 ring-1 ${
+                contest.highlight
+                  ? "bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-orange-500/15 ring-amber-400/30 hover:ring-amber-400/50"
+                  : "bg-white/5 ring-white/10 hover:ring-purple-500/30 hover:bg-white/10"
+              }`}
+              whileHover={prefersReducedMotion ? undefined : { x: 4 }}
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <h4 className="font-semibold mb-1.5 truncate">
+                    {contest.url ? (
+                      <a
+                        href={contest.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-purple-300 transition-colors inline-flex items-center gap-1.5"
+                      >
+                        {contest.name}
+                        <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </a>
+                    ) : (
+                      contest.name
+                    )}
+                  </h4>
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-white/60">
+                    <span className="flex items-center gap-1.5">
+                      <Users size={14} className="text-blue-400" />
+                      {contest.team}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-white/10 text-xs">
+                      {contest.type}
+                    </span>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                <div className={`text-right ${contest.highlight ? "text-amber-300" : "text-cyan-300"}`}>
+                  <div className="text-2xl font-bold">{contest.position}</div>
+                  <p className="text-xs text-white/50">Position</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </motion.div>
+
+      {/* Mobile StopStalk button */}
+      <motion.a
+        href={stopstalk.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        variants={cardVariants}
+        className="sm:hidden mt-6 w-full inline-flex justify-center px-4 py-3 rounded-xl btn-primary text-white items-center gap-2 text-sm font-medium"
+      >
+        <ExternalLink size={16} />
+        View StopStalk Profile
+      </motion.a>
     </motion.section>
   );
 };

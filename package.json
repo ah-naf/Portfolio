@@ -15,12 +15,17 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@react-three/postprocessing": "^3.0.4",
     "@tailwindcss/vite": "^4.1.11",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.525.0",
+    "maath": "^0.10.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "three": "^0.182.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
