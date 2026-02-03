@@ -1,5 +1,66 @@
 export const projects = [
   {
+    "name": "GitHub Repository RAG Chat",
+    "summary": "Full-stack RAG application enabling conversational querying of GitHub repositories using LangChain, FastAPI, and Angular.",
+    "description": "A comprehensive Retrieval-Augmented Generation system that allows developers to chat with and extract knowledge from GitHub codebases. The application combines a Python FastAPI backend with an Angular frontend, leveraging Google's Gemini API for embeddings, GitHub API for repository access, and LangChain for RAG orchestration. Users can ask natural language questions about any public GitHub repository and receive contextually-aware answers based on the actual codebase.",
+    "impact": "Dramatically reduces the learning curve for understanding unfamiliar codebases by enabling natural language exploration of repositories. Perfect for code review, onboarding new developers, and documentation discovery without manually navigating through files.",
+    "tools": [
+      "Python",
+      "FastAPI",
+      "Angular",
+      "TypeScript",
+      "LangChain",
+      "Google Gemini API",
+      "GitHub API",
+      "LangSmith",
+      "RAG Pipeline",
+      "Vector Embeddings"
+    ],
+    "github": "https://github.com/ah-naf/Github-RAG",
+    "video": null,
+    "highlights": [
+      "Natural language querying of entire GitHub repositories through conversational interface.",
+      "FastAPI backend with robust RAG pipeline powered by LangChain framework.",
+      "Angular-based frontend providing intuitive chat experience for code exploration.",
+      "Integration with Google Gemini API for advanced language understanding and embeddings.",
+      "GitHub token authentication for accessing both public and private repositories.",
+      "LangSmith integration for tracking and debugging RAG chain performance.",
+      "Modular architecture separating frontend and backend for scalable deployment.",
+      "Environment-based configuration supporting development and production modes."
+    ]
+  },
+  {
+    "name": "AWS AI Agent Automation",
+    "summary": "LangGraph-powered agentic system for autonomous AWS infrastructure management across IAM, S3, and VPC services.",
+    "description": "An intelligent AI agent built with LangGraph that autonomously manages AWS cloud infrastructure through natural language commands. The system uses state machines to orchestrate complex multi-step workflows, including user approval gates for critical operations. The agent can create IAM users and policies, manage S3 buckets and objects, configure VPC networks, subnets, and security groups—all through conversational interaction while maintaining safety through human-in-the-loop approval mechanisms.",
+    "impact": "Transforms AWS infrastructure management from manual console clicks and CLI commands into natural language conversations. Reduces operational complexity and human error while maintaining security through approval workflows for sensitive operations.",
+    "tools": [
+      "Python",
+      "LangGraph",
+      "AWS SDK (Boto3)",
+      "IAM",
+      "S3",
+      "VPC",
+      "State Machines",
+      "Approval Workflows",
+      "Agentic AI"
+    ],
+    "github": "https://github.com/ah-naf/aws-ai-agent",
+    "video": null,
+    "highlights": [
+      "LangGraph state machine orchestration for complex multi-step AWS workflows.",
+      "Human-in-the-loop approval system for critical infrastructure changes via approval.py.",
+      "Modular service organization with dedicated folders for IAM, S3, and VPC operations.",
+      "Automated IAM user creation, policy attachment, and permission management.",
+      "S3 bucket lifecycle management including creation, configuration, and object operations.",
+      "VPC network provisioning with subnet allocation and security group configuration.",
+      "Conversational interface transforming infrastructure-as-code into infrastructure-as-conversation.",
+      "LangGraph.json configuration enabling deployment and monitoring of agent workflows.",
+      "Prompt engineering via prompt.py for reliable AWS service interaction.",
+      "Safety-first architecture preventing unauthorized changes through approval gates."
+    ]
+  },
+  {
     name: "Merkle‑Chunk File Transfer",
     summary:
       "Go-based chunked file transfer with Merkle tree integrity—upload, verify, and download large files reliably.",
