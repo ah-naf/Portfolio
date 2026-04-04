@@ -87,7 +87,7 @@ const Portfolio = () => {
       <div
         className="sticky z-40"
         style={{
-          top: "65px",
+          top: "63px",
           background: "var(--color-bg)",
           borderBottom: "2px solid var(--color-border)",
         }}
