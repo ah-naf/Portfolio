@@ -5,7 +5,7 @@ export * from "./experience";
 
 export const profile = {
   name: "Ahnaf Hasan Shifat",
-  title: "Programmer & Problem Solver",
+  title: "Associate Software Engineer",
   email: "sheikhahnafshifat@gmail.com",
   phoneDisplay: "+880 1639 236 879",
   phoneRaw: "+8801639236879",

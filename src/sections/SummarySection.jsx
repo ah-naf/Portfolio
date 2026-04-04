@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BookOpen,
   Award,
@@ -12,11 +11,12 @@ import {
   Mail,
   Building2,
   MapPin,
-  Sparkles,
 } from "lucide-react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { motion, useReducedMotion } from "framer-motion";
 import { competitiveProfiles, experienceData } from "../data/portfolioData";
+
+const RESUME_URL = "https://ah-naf.github.io/Portfolio/Ahnaf_Hasan_Shifat.pdf";
 
 function getCurrentRole(exps) {
   const roles = exps.flatMap((c) =>
@@ -27,10 +27,8 @@ function getCurrentRole(exps) {
   );
   const ref = present.length ? present : roles;
   const monthIndex = (m) =>
-    [
-      "jan", "feb", "mar", "apr", "may", "jun",
-      "jul", "aug", "sep", "oct", "nov", "dec",
-    ].indexOf(String(m).slice(0, 3).toLowerCase());
+    ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]
+      .indexOf(String(m).slice(0, 3).toLowerCase());
   const parseMY = (s) => {
     if (!s) return { y: -Infinity, m: -1 };
     const cleaned = String(s).replace(/\u00A0/g, " ").trim();
@@ -47,132 +45,111 @@ function getCurrentRole(exps) {
   })[0];
 }
 
-// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
-const SummarySection = ({ setActiveSection }) => {
+const SummarySection = ({ setActiveTab }) => {
   const { totalSolvedAllOJ, codeforces, codechef } = competitiveProfiles;
   const tech = ["Go", "React", "Node.js", "PostgreSQL", "Docker"];
   const current = getCurrentRole(experienceData);
   const prefersReducedMotion = useReducedMotion();
-  const currentURL = window.location.href;
 
   return (
     <motion.section
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.05 }}
       variants={containerVariants}
-      className="rounded-3xl glass p-6 md:p-8 text-white/90"
     >
-      {/* Header with animated icon */}
-      <motion.div variants={cardVariants} className="flex items-center gap-3 mb-8">
-        <div className="relative">
-          <div className="absolute inset-0 bg-purple-500/30 blur-xl rounded-full" />
-          <div className="relative p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 ring-1 ring-white/10">
-            <BookOpen className="text-purple-400" size={24} />
-          </div>
-        </div>
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold gradient-text">Summary</h2>
-          <p className="text-sm text-white/50">Quick overview of my journey</p>
-        </div>
-      </motion.div>
-
-      <motion.div
-        variants={containerVariants}
-        className="grid xl:grid-cols-3 gap-6"
+      {/* Section heading */}
+      <motion.h2
+        variants={cardVariants}
+        className="neo-section-heading text-2xl md:text-3xl mb-8"
       >
-        {/* Left: About + Current Job + Quick Stats */}
-        <div className="xl:col-span-2 space-y-6">
-          {/* About */}
-          <motion.div
-            variants={cardVariants}
-            className="group rounded-2xl p-6 bg-white/5 ring-1 ring-white/10 hover:ring-purple-500/30 transition-all duration-300 card-hover"
-          >
+        About
+      </motion.h2>
+
+      <div className="grid xl:grid-cols-3 gap-6">
+        {/* Left: About + Current Job + Quick Stats + Currently working */}
+        <div className="xl:col-span-2 space-y-5">
+
+          {/* About Me */}
+          <motion.div variants={cardVariants} className="neo-card p-6">
             <div className="flex items-center gap-2 mb-3">
-              <Sparkles size={16} className="text-purple-400" />
-              <h3 className="text-lg font-semibold gradient-text">About Me</h3>
+              <BookOpen size={16} style={{ color: "var(--color-accent)" }} />
+              <h3 className="font-bold text-base" style={{ color: "var(--color-text-primary)" }}>
+                About Me
+              </h3>
             </div>
-            <p className="text-white/70 leading-relaxed">
-              I'm a passionate Computer Science Engineer specializing in
-              competitive programming and full-stack development. With a strong
-              foundation in algorithms and data structures, I've solved over{" "}
-              <span className="text-cyan-400 font-semibold">{totalSolvedAllOJ}+</span> problems 
-              across online judges and achieved notable contest rankings.
+            <p className="leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+              I'm a passionate Computer Science Engineer specializing in competitive
+              programming and full-stack development. With a strong foundation in
+              algorithms and data structures, I've solved over{" "}
+              <span className="font-bold" style={{ color: "var(--color-accent)" }}>
+                {totalSolvedAllOJ}+
+              </span>{" "}
+              problems across online judges and achieved notable contest rankings.
             </p>
           </motion.div>
 
           {/* Current Job */}
           {current && (
-            <motion.div
-              variants={cardVariants}
-              className="group rounded-2xl p-6 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 ring-1 ring-white/10 hover:ring-purple-500/30 transition-all duration-300 card-hover"
-            >
+            <motion.div variants={cardVariants} className="neo-card p-6">
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <h3 className="text-lg md:text-xl font-bold text-white">
+                    <h3 className="text-lg font-bold" style={{ color: "var(--color-text-primary)" }}>
                       {current.title}
                     </h3>
-                    <span className="text-white/30">•</span>
-                    <span className="text-purple-300 font-medium">
+                    <span style={{ color: "var(--color-text-secondary)" }}>•</span>
+                    <span className="font-semibold" style={{ color: "var(--color-accent)" }}>
                       {current.company?.name}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-white/60">
-                    <span className="inline-flex items-center gap-2">
-                      <Calendar size={14} className="text-blue-400" />
+                  <div className="flex flex-wrap items-center gap-4 text-sm mb-3" style={{ color: "var(--color-text-secondary)" }}>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Calendar size={14} />
                       {current.start} — {current.end}
                     </span>
-                    <span className="inline-flex items-center gap-2">
-                      <MapPin size={14} className="text-green-400" />
+                    <span className="inline-flex items-center gap-1.5">
+                      <MapPin size={14} />
                       {current.location}
                     </span>
-                    <span className="inline-flex items-center gap-2">
-                      <Building2 size={14} className="text-cyan-400" />
+                    <span className="inline-flex items-center gap-1.5">
+                      <Building2 size={14} />
                       {current.type}
                     </span>
                   </div>
+                  {current.tech?.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {current.tech.slice(0, 6).map((t) => (
+                        <span key={t} className="neo-chip">{t}</span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <motion.button
-                  onClick={() => setActiveSection("experience")}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 ring-1 ring-white/10 text-sm font-medium transition-all"
-                  whileHover={{ x: 4 }}
-                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setActiveTab("experience")}
+                  className="neo-btn-secondary px-4 py-2 gap-2 shrink-0 self-start"
+                  whileTap={{ scale: 0.97 }}
                 >
-                  View <ArrowRight size={16} />
+                  View <ArrowRight size={15} />
                 </motion.button>
               </div>
-              {current.tech?.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {current.tech.slice(0, 6).map((t) => (
-                    <motion.span
-                      key={t}
-                      className="px-3 py-1 rounded-full text-xs bg-blue-500/10 text-blue-300 ring-1 ring-blue-500/20"
-                      whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
-                    >
-                      {t}
-                    </motion.span>
-                  ))}
-                </div>
-              )}
             </motion.div>
           )}
 
@@ -184,8 +161,6 @@ const SummarySection = ({ setActiveSection }) => {
                 value: `${totalSolvedAllOJ}+`,
                 sub: "All OJs Combined",
                 icon: <Code2 size={20} />,
-                gradient: "from-blue-500/10 to-purple-500/10",
-                iconColor: "text-blue-400",
                 section: "competitive",
               },
               {
@@ -193,8 +168,6 @@ const SummarySection = ({ setActiveSection }) => {
                 value: codeforces.maxRating,
                 sub: codeforces.rankTitle,
                 icon: <Trophy size={20} />,
-                gradient: "from-amber-500/10 to-orange-500/10",
-                iconColor: "text-amber-400",
                 section: "competitive",
               },
               {
@@ -202,97 +175,106 @@ const SummarySection = ({ setActiveSection }) => {
                 value: `${codechef.stars}★`,
                 sub: `Max ${codechef.maxRating}`,
                 icon: <Star size={20} />,
-                gradient: "from-yellow-500/10 to-red-500/10",
-                iconColor: "text-yellow-400",
                 section: "competitive",
               },
             ].map((stat, i) => (
               <motion.button
                 key={i}
-                onClick={() => setActiveSection(stat.section)}
-                className={`group text-left rounded-2xl p-5 ring-1 ring-white/10 bg-gradient-to-br ${stat.gradient} hover:ring-purple-500/30 transition-all duration-300 card-hover`}
-                whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+                onClick={() => setActiveTab(stat.section)}
+                className="neo-card-interactive p-5 text-left group"
+                whileHover={prefersReducedMotion ? undefined : { y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm text-white/50">{stat.label}</span>
-                  <span className={stat.iconColor}>{stat.icon}</span>
+                  <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                    {stat.label}
+                  </span>
+                  <span style={{ color: "var(--color-accent)" }}>{stat.icon}</span>
                 </div>
-                <div className="text-2xl font-bold gradient-text">{stat.value}</div>
-                <div className="mt-1 text-white/60 text-sm flex items-center gap-1">
+                <div
+                  className="text-2xl font-black mb-1"
+                  style={{ color: "var(--color-accent)" }}
+                >
+                  {stat.value}
+                </div>
+                <div
+                  className="text-sm flex items-center gap-1"
+                  style={{ color: "var(--color-text-secondary)" }}
+                >
                   {stat.sub}
-                  <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                  <ArrowRight
+                    size={13}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                  />
                 </div>
               </motion.button>
             ))}
           </motion.div>
 
           {/* Currently working on */}
-          <motion.div
-            variants={cardVariants}
-            className="rounded-2xl p-6 ring-1 ring-white/10 bg-white/5 hover:ring-emerald-500/30 transition-all duration-300 card-hover"
-          >
+          <motion.div variants={cardVariants} className="neo-card p-6">
             <div className="flex items-center gap-2 mb-3">
-              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <Rocket size={18} className="text-emerald-400" />
-              <h3 className="text-lg font-semibold text-emerald-300">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <Rocket size={16} className="text-emerald-500" />
+              <h3 className="font-bold text-base text-emerald-600">
                 Currently working on
               </h3>
             </div>
-            <ul className="space-y-2 text-white/70">
+            <ul className="space-y-2" style={{ color: "var(--color-text-secondary)" }}>
               <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/60" />
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/60" />
                 Learning Golang
               </li>
               <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/60" />
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/60" />
                 Learning System Design
               </li>
             </ul>
           </motion.div>
         </div>
 
-        {/* Right column: Education + Tech + CTAs */}
-        <div className="space-y-6">
+        {/* Right: Education + Core Tech + CTAs */}
+        <div className="space-y-5">
+
           {/* Education */}
-          <motion.div
-            variants={cardVariants}
-            className="rounded-2xl p-6 bg-white/5 ring-1 ring-white/10 hover:ring-blue-500/30 transition-all duration-300 card-hover"
-          >
+          <motion.div variants={cardVariants} className="neo-card p-6">
             <div className="flex items-center gap-2 mb-4">
-              <Award size={18} className="text-blue-400" />
-              <h3 className="text-lg font-semibold gradient-text">Education</h3>
+              <Award size={16} style={{ color: "var(--color-accent)" }} />
+              <h3 className="font-bold text-base" style={{ color: "var(--color-text-primary)" }}>
+                Education
+              </h3>
             </div>
-            <h4 className="text-base font-semibold mb-1">
+            <h4 className="font-semibold text-sm mb-1" style={{ color: "var(--color-text-primary)" }}>
               B.Sc. (Eng.) in Computer Science and Engineering
             </h4>
-            <p className="text-purple-300 font-medium mb-3">Comilla University</p>
-            <div className="space-y-2 text-sm text-white/60">
+            <p className="font-bold text-sm mb-4" style={{ color: "var(--color-accent)" }}>
+              Comilla University
+            </p>
+            <div className="space-y-2 text-sm" style={{ color: "var(--color-text-secondary)" }}>
               <div className="flex items-center gap-2">
-                <Calendar size={14} className="text-blue-400" />
+                <Calendar size={13} />
                 January 2020 – July 2025
               </div>
               <div className="flex items-center gap-2">
-                <Award size={14} className="text-amber-400" />
+                <Award size={13} style={{ color: "var(--color-accent-amber)" }} />
                 CGPA: 3.30 out of 4.00
               </div>
             </div>
           </motion.div>
 
-          {/* Tech chips */}
+          {/* Core Tech chips */}
           <Tooltip.Provider delayDuration={150}>
-            <motion.div
-              variants={cardVariants}
-              className="rounded-2xl p-6 ring-1 ring-white/10 bg-white/5 hover:ring-cyan-500/30 transition-all duration-300 card-hover"
-            >
-              <h3 className="text-lg font-semibold gradient-text mb-4">Core Tech</h3>
+            <motion.div variants={cardVariants} className="neo-card p-6">
+              <h3 className="font-bold text-base mb-4" style={{ color: "var(--color-text-primary)" }}>
+                Core Tech
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {tech.map((t) => (
                   <Tooltip.Root key={t}>
                     <Tooltip.Trigger asChild>
                       <motion.span
-                        className="px-4 py-2 rounded-xl text-sm ring-1 ring-white/10 bg-gradient-to-r from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20 cursor-default transition-all"
-                        whileHover={prefersReducedMotion ? undefined : { scale: 1.05, y: -2 }}
+                        className="neo-chip"
+                        whileHover={prefersReducedMotion ? undefined : { y: -1 }}
                       >
                         {t}
                       </motion.span>
@@ -300,10 +282,18 @@ const SummarySection = ({ setActiveSection }) => {
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="rounded-lg px-3 py-2 text-xs glass-strong text-white shadow-lg"
+                        style={{
+                          background: "var(--color-bg-subtle)",
+                          border: "2px solid var(--color-border)",
+                          boxShadow: "3px 3px 0px var(--color-shadow)",
+                          borderRadius: "6px",
+                          padding: "6px 12px",
+                          fontSize: "0.75rem",
+                          color: "var(--color-text-primary)",
+                        }}
                       >
                         {`I use ${t} extensively in projects`}
-                        <Tooltip.Arrow className="fill-black/80" />
+                        <Tooltip.Arrow style={{ fill: "var(--color-border)" }} />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
@@ -312,53 +302,47 @@ const SummarySection = ({ setActiveSection }) => {
             </motion.div>
           </Tooltip.Provider>
 
-          {/* CTAs */}
-          <motion.div
-            variants={cardVariants}
-            className="rounded-2xl p-6 ring-1 ring-white/10 bg-gradient-to-br from-purple-600/10 to-blue-600/10"
-          >
-            <div className="space-y-3">
+          {/* Navigation CTAs */}
+          <motion.div variants={cardVariants} className="neo-card p-5">
+            <div className="space-y-2.5">
               {[
-                { label: "Explore Projects", section: "projects" },
-                { label: "See Contest History", section: "competitive" },
-                { label: "Read Blog", section: "blog" },
+                { label: "Explore Projects", tab: "projects" },
+                { label: "See Contest History", tab: "competitive" },
+                { label: "Read Blog", tab: "blog" },
               ].map((cta) => (
                 <motion.button
-                  key={cta.section}
-                  onClick={() => setActiveSection(cta.section)}
-                  className="w-full group flex items-center justify-between px-4 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 ring-1 ring-white/10 transition-all"
-                  whileHover={{ x: 4 }}
+                  key={cta.tab}
+                  onClick={() => setActiveTab(cta.tab)}
+                  className="w-full neo-btn-secondary flex items-center justify-between px-4 py-3"
                   whileTap={{ scale: 0.98 }}
                 >
-                  <span className="font-medium">{cta.label}</span>
-                  <ArrowRight size={18} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                  <span>{cta.label}</span>
+                  <ArrowRight size={16} />
                 </motion.button>
               ))}
             </div>
 
-            {/* Resume + Email */}
-            <div className="mt-5 flex items-center gap-3">
+            <div className="mt-4 flex items-center gap-3">
               <a
-                href={`${currentURL}/Ahnaf_Hasan_Shifat.pdf`}
-                className="flex-1 px-4 py-3 rounded-xl btn-primary text-white inline-flex items-center justify-center gap-2 text-sm font-medium"
+                href={RESUME_URL}
+                className="neo-btn-primary flex-1 justify-center px-4 py-3 gap-2"
                 target="_blank"
+                rel="noopener noreferrer"
               >
-                <FileDown size={16} />
+                <FileDown size={15} />
                 Resume
               </a>
-              <motion.a
+              <a
                 href="mailto:sheikhahnafshifat@gmail.com"
-                className="px-4 py-3 rounded-xl btn-secondary text-white inline-flex items-center gap-2 text-sm font-medium"
-                whileHover={{ x: 2 }}
-                whileTap={{ scale: 0.98 }}
+                className="neo-btn-secondary px-4 py-3 gap-2"
               >
-                <Mail size={16} />
+                <Mail size={15} />
                 Email
-              </motion.a>
+              </a>
             </div>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </motion.section>
   );
 };

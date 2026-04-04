@@ -1,86 +1,79 @@
-import React from "react";
 import { Trophy, Code, Star, Users, ExternalLink, Award, Zap } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { contestHistory, competitiveProfiles } from "../data/portfolioData";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.06, delayChildren: 0.05 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const CompetitiveSection = () => {
-  const { codeforces, codechef, stopstalk, totalSolvedAllOJ } =
-    competitiveProfiles;
+  const { codeforces, codechef, stopstalk, totalSolvedAllOJ } = competitiveProfiles;
   const prefersReducedMotion = useReducedMotion();
 
   return (
     <motion.section
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.05 }}
       variants={containerVariants}
-      className="rounded-3xl glass p-6 md:p-8 text-white/90"
     >
       {/* Header */}
       <motion.div
         variants={cardVariants}
-        className="flex items-center justify-between mb-8"
+        className="flex items-center justify-between mb-8 gap-4"
       >
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="absolute inset-0 bg-amber-500/30 blur-xl rounded-full" />
-            <div className="relative p-2 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 ring-1 ring-white/10">
-              <Trophy className="text-amber-400" size={24} />
-            </div>
-          </div>
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold gradient-text">
-              Competitive Programming
-            </h2>
-            <p className="text-sm text-white/50">Problem solving journey</p>
-          </div>
-        </div>
+        <h2 className="neo-section-heading text-2xl md:text-3xl flex items-center gap-3">
+          <Trophy size={22} style={{ color: "var(--color-accent)" }} />
+          Competitive Programming
+        </h2>
 
-        <motion.a
+        <a
           href={stopstalk.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:inline-flex px-4 py-2.5 rounded-xl btn-primary text-white items-center gap-2 text-sm font-medium"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          className="neo-btn-primary hidden sm:inline-flex px-4 py-2.5 gap-2 text-sm"
         >
-          <ExternalLink size={16} />
-          StopStalk Profile
-        </motion.a>
+          <ExternalLink size={15} />
+          StopStalk
+        </a>
       </motion.div>
 
-      {/* Stats Overview */}
+      {/* Stats row */}
       <motion.div variants={containerVariants} className="grid md:grid-cols-3 gap-4 mb-8">
-        {/* Total Problems */}
-        <motion.div
+
+        {/* Total problems */}
+        <motion.button
           variants={cardVariants}
-          className="rounded-2xl p-5 bg-gradient-to-br from-purple-500/10 to-blue-500/10 ring-1 ring-white/10 hover:ring-purple-500/30 transition-all duration-300 card-hover"
-          whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+          className="neo-card-interactive p-5 text-left"
+          whileHover={prefersReducedMotion ? undefined : { y: -2 }}
+          disabled
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-white/50">Total Problems</span>
-            <Code size={18} className="text-purple-400" />
+            <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+              Total Problems
+            </span>
+            <Code size={18} style={{ color: "var(--color-accent)" }} />
           </div>
-          <div className="text-3xl font-bold gradient-text">{totalSolvedAllOJ}+</div>
-          <p className="text-sm text-white/60 mt-1">Across all platforms</p>
-        </motion.div>
+          <div className="text-3xl font-black mb-1" style={{ color: "var(--color-accent)" }}>
+            {totalSolvedAllOJ}+
+          </div>
+          <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+            Across all platforms
+          </p>
+        </motion.button>
 
         {/* Codeforces */}
         <motion.a
@@ -88,16 +81,22 @@ const CompetitiveSection = () => {
           target="_blank"
           rel="noopener noreferrer"
           variants={cardVariants}
-          className="rounded-2xl p-5 bg-gradient-to-br from-orange-500/10 to-red-500/10 ring-1 ring-orange-500/20 hover:ring-orange-500/40 transition-all duration-300 card-hover"
-          whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+          className="neo-card-interactive p-5 block"
+          whileHover={prefersReducedMotion ? undefined : { y: -2 }}
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-white/50">Codeforces</span>
-            <span className="text-xs text-orange-300/70">@{codeforces.handle}</span>
+            <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+              Codeforces
+            </span>
+            <span className="text-xs font-semibold" style={{ color: "#ea580c" }}>
+              @{codeforces.handle}
+            </span>
           </div>
-          <div className="text-3xl font-bold text-orange-300">{codeforces.maxRating}</div>
-          <p className="text-sm text-orange-200/80 mt-1 flex items-center gap-1">
-            <Award size={14} />
+          <div className="text-3xl font-black mb-1" style={{ color: "#ea580c" }}>
+            {codeforces.maxRating}
+          </div>
+          <p className="text-sm flex items-center gap-1" style={{ color: "#ea580c" }}>
+            <Award size={13} />
             {codeforces.rankTitle}
           </p>
         </motion.a>
@@ -108,77 +107,101 @@ const CompetitiveSection = () => {
           target="_blank"
           rel="noopener noreferrer"
           variants={cardVariants}
-          className="rounded-2xl p-5 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 ring-1 ring-yellow-500/20 hover:ring-yellow-500/40 transition-all duration-300 card-hover"
-          whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+          className="neo-card-interactive p-5 block"
+          whileHover={prefersReducedMotion ? undefined : { y: -2 }}
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-white/50">CodeChef</span>
-            <span className="text-xs text-yellow-300/70">@{codechef.handle}</span>
+            <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+              CodeChef
+            </span>
+            <span className="text-xs font-semibold" style={{ color: "#ca8a04" }}>
+              @{codechef.handle}
+            </span>
           </div>
-          <div className="flex items-center gap-1.5 text-3xl font-bold text-yellow-300">
+          <div className="flex items-center gap-2 text-3xl font-black mb-1" style={{ color: "#ca8a04" }}>
             {codechef.stars}
             <div className="flex">
               {[...Array(Math.min(codechef.stars, 5))].map((_, i) => (
-                <Star key={i} size={16} className="text-yellow-300 fill-current" />
+                <Star key={i} size={14} className="fill-current" style={{ color: "#ca8a04" }} />
               ))}
             </div>
           </div>
-          <p className="text-sm text-yellow-200/80 mt-1">Max {codechef.maxRating}</p>
+          <p className="text-sm" style={{ color: "#ca8a04" }}>Max {codechef.maxRating}</p>
         </motion.a>
       </motion.div>
 
-      {/* Contest History */}
+      {/* Contest history */}
       <motion.div variants={cardVariants}>
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <Zap size={18} className="text-cyan-400" />
-          <span className="gradient-text">Contest History</span>
+        <h3
+          className="text-lg font-bold mb-4 flex items-center gap-2"
+          style={{ color: "var(--color-text-primary)" }}
+        >
+          <Zap size={17} style={{ color: "var(--color-accent)" }} />
+          Contest History
         </h3>
 
-        <motion.div
-          variants={containerVariants}
-          className="space-y-3"
-        >
+        <motion.div variants={containerVariants} className="space-y-3">
           {contestHistory.map((contest, i) => (
             <motion.div
               key={`${contest.name}-${i}`}
               variants={cardVariants}
-              className={`group rounded-2xl p-4 transition-all duration-300 ring-1 ${
-                contest.highlight
-                  ? "bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-orange-500/15 ring-amber-400/30 hover:ring-amber-400/50"
-                  : "bg-white/5 ring-white/10 hover:ring-purple-500/30 hover:bg-white/10"
-              }`}
-              whileHover={prefersReducedMotion ? undefined : { x: 4 }}
+              className={contest.highlight ? "neo-card-accent p-4" : "neo-card p-4"}
+              whileHover={prefersReducedMotion ? undefined : { x: 2 }}
             >
               <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <h4 className="font-semibold mb-1.5 truncate">
+                  <h4
+                    className="font-semibold mb-1.5 text-sm truncate"
+                    style={{ color: contest.highlight ? "#ffffff" : "var(--color-text-primary)" }}
+                  >
                     {contest.url ? (
                       <a
                         href={contest.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-purple-300 transition-colors inline-flex items-center gap-1.5"
+                        className="inline-flex items-center gap-1.5 hover:opacity-75 transition-opacity"
                       >
                         {contest.name}
-                        <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink size={12} />
                       </a>
                     ) : (
                       contest.name
                     )}
                   </h4>
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-white/60">
-                    <span className="flex items-center gap-1.5">
-                      <Users size={14} className="text-blue-400" />
+                  <div
+                    className="flex flex-wrap items-center gap-2 text-xs"
+                    style={{ color: contest.highlight ? "rgba(255,255,255,0.75)" : "var(--color-text-secondary)" }}
+                  >
+                    <span className="flex items-center gap-1">
+                      <Users size={12} />
                       {contest.team}
                     </span>
-                    <span className="px-2 py-0.5 rounded-full bg-white/10 text-xs">
+                    <span
+                      className="neo-badge"
+                      style={
+                        contest.highlight
+                          ? { background: "rgba(255,255,255,0.2)", color: "#ffffff", border: "1.5px solid rgba(255,255,255,0.4)" }
+                          : undefined
+                      }
+                    >
                       {contest.type}
                     </span>
                   </div>
                 </div>
-                <div className={`text-right ${contest.highlight ? "text-amber-300" : "text-cyan-300"}`}>
-                  <div className="text-2xl font-bold">{contest.position}</div>
-                  <p className="text-xs text-white/50">Position</p>
+
+                <div className="text-right shrink-0">
+                  <div
+                    className="text-2xl font-black"
+                    style={{ color: contest.highlight ? "#ffffff" : "var(--color-accent)" }}
+                  >
+                    {contest.position}
+                  </div>
+                  <p
+                    className="text-xs"
+                    style={{ color: contest.highlight ? "rgba(255,255,255,0.65)" : "var(--color-text-secondary)" }}
+                  >
+                    Position
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -192,9 +215,9 @@ const CompetitiveSection = () => {
         target="_blank"
         rel="noopener noreferrer"
         variants={cardVariants}
-        className="sm:hidden mt-6 w-full inline-flex justify-center px-4 py-3 rounded-xl btn-primary text-white items-center gap-2 text-sm font-medium"
+        className="sm:hidden mt-6 w-full neo-btn-primary justify-center px-4 py-3 gap-2 text-sm"
       >
-        <ExternalLink size={16} />
+        <ExternalLink size={15} />
         View StopStalk Profile
       </motion.a>
     </motion.section>

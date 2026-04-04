@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { 
-  Github, 
-  ExternalLink, 
-  Play, 
-  X, 
-  FolderGit2, 
-  Sparkles, 
-  Code2, 
-  Layers, 
-  Zap, 
+import {
+  Github,
+  ExternalLink,
+  Play,
+  X,
+  FolderGit2,
+  Code2,
+  Layers,
+  Zap,
   Target,
   ArrowUpRight,
   Monitor,
-  ChevronRight
+  ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { projects } from "../data/portfolioData";
@@ -22,16 +22,16 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -40,45 +40,9 @@ const modalContentVariants = {
   visible: (i) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: i * 0.08, duration: 0.35, ease: [0.22, 1, 0.36, 1] },
   }),
 };
-
-const TechBadge = ({ children, variant = "default" }) => {
-  const variants = {
-    default: "from-purple-500/15 to-blue-500/15 text-blue-200 ring-blue-400/20",
-    highlight: "from-cyan-500/20 to-emerald-500/20 text-emerald-200 ring-emerald-400/30",
-  };
-  
-  return (
-    <motion.span 
-      className={`px-3 py-1.5 rounded-full text-xs bg-gradient-to-r ${variants[variant]} ring-1 cursor-default`}
-      whileHover={{ scale: 1.05, y: -2 }}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
-    >
-      {children}
-    </motion.span>
-  );
-};
-
-const FeatureCard = ({ icon: Icon, title, description, color, delay }) => (
-  <motion.div
-    custom={delay}
-    variants={modalContentVariants}
-    className={`group p-4 rounded-2xl bg-gradient-to-br ${color} ring-1 ring-white/10 hover:ring-white/20 transition-all duration-300`}
-    whileHover={{ y: -2, scale: 1.02 }}
-  >
-    <div className="flex items-start gap-3">
-      <div className="p-2 rounded-xl bg-white/10">
-        <Icon size={18} className="text-white/80" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <h5 className="font-semibold text-white/90 mb-1">{title}</h5>
-        <p className="text-sm text-white/60 leading-relaxed">{description}</p>
-      </div>
-    </div>
-  </motion.div>
-);
 
 const ProjectsSection = () => {
   const [open, setOpen] = useState(false);
@@ -103,77 +67,75 @@ const ProjectsSection = () => {
     <motion.section
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.05 }}
       variants={containerVariants}
-      className="rounded-3xl glass p-6 md:p-8 text-white/90"
     >
-      {/* Header */}
-      <motion.div variants={cardVariants} className="flex items-center gap-3 mb-8">
-        <div className="relative">
-          <div className="absolute inset-0 bg-cyan-500/30 blur-xl rounded-full" />
-          <div className="relative p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 ring-1 ring-white/10">
-            <FolderGit2 className="text-cyan-400" size={24} />
-          </div>
-        </div>
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold gradient-text">Projects</h2>
-          <p className="text-sm text-white/50">Things I've built</p>
-        </div>
+      {/* Heading */}
+      <motion.div variants={cardVariants} className="mb-8">
+        <h2 className="neo-section-heading text-2xl md:text-3xl flex items-center gap-3">
+          <FolderGit2 size={22} style={{ color: "var(--color-accent)" }} />
+          Projects
+        </h2>
       </motion.div>
 
-      {/* Project Cards - Bento Grid */}
-      <motion.div variants={containerVariants} className="grid md:grid-cols-2 gap-6">
+      {/* Bento Grid */}
+      <motion.div variants={containerVariants} className="grid md:grid-cols-2 gap-5">
         {projects.map((p, idx) => (
           <motion.div
             key={`${p.name}-${idx}`}
             variants={cardVariants}
-            className={`group rounded-2xl p-6 ring-1 ring-white/10 bg-white/5 hover:ring-cyan-500/30 transition-all duration-300 card-hover ${
-              idx === 0 ? "md:col-span-2" : ""
-            }`}
-            whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+            className={`neo-card p-6 group ${idx === 0 ? "md:col-span-2" : ""}`}
+            whileHover={prefersReducedMotion ? undefined : { y: -2 }}
           >
             <div className="flex items-start justify-between mb-4">
-              <button
-                onClick={() => openModal(p)}
-                className="text-left group/title"
-              >
-                <h3 className="text-xl font-bold text-white group-hover/title:text-cyan-300 transition-colors">
+              <button onClick={() => openModal(p)} className="text-left group/title">
+                <h3
+                  className="text-xl font-bold transition-colors group-hover/title:opacity-80"
+                  style={{ color: "var(--color-text-primary)" }}
+                >
                   {p.name}
                 </h3>
               </button>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ml-3 shrink-0">
                 {p.live && (
                   <a
                     href={p.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-white/5 text-white/60 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all"
+                    className="neo-btn-icon p-2"
                     title="Live Demo"
                   >
-                    <ExternalLink size={18} />
+                    <ExternalLink size={16} />
                   </a>
                 )}
                 <a
                   href={p.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition-all"
+                  className="neo-btn-icon p-2"
                   title="Source Code"
                 >
-                  <Github size={18} />
+                  <Github size={16} />
                 </a>
               </div>
             </div>
 
-            <p className="text-white/70 mb-4 leading-relaxed line-clamp-2">
+            <p
+              className="text-sm mb-4 leading-relaxed line-clamp-2"
+              style={{ color: "var(--color-text-secondary)" }}
+            >
               {p.summary}
             </p>
 
             {p.highlights?.length > 0 && (
-              <ul className="text-white/60 text-sm space-y-1.5 mb-4">
+              <ul className="text-sm space-y-1.5 mb-4" style={{ color: "var(--color-text-secondary)" }}>
                 {p.highlights.slice(0, 2).map((h, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <Sparkles size={14} className="text-purple-400 mt-0.5 flex-shrink-0" />
+                    <Sparkles
+                      size={13}
+                      className="mt-0.5 shrink-0"
+                      style={{ color: "var(--color-accent)" }}
+                    />
                     <span>{h}</span>
                   </li>
                 ))}
@@ -181,35 +143,37 @@ const ProjectsSection = () => {
             )}
 
             {p.tools?.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-5">
+              <div className="flex flex-wrap gap-1.5 mb-5">
                 {p.tools.slice(0, 6).map((t, i) => (
-                  <TechBadge key={i}>{t}</TechBadge>
+                  <span key={i} className="neo-chip">{t}</span>
                 ))}
                 {p.tools.length > 6 && (
-                  <span className="px-3 py-1 rounded-full text-xs bg-white/5 text-white/50">
-                    +{p.tools.length - 6} more
+                  <span
+                    className="neo-chip"
+                    style={{ color: "var(--color-text-secondary)" }}
+                  >
+                    +{p.tools.length - 6}
                   </span>
                 )}
               </div>
             )}
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <a
                 href={p.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl btn-primary text-white inline-flex items-center gap-2 text-sm font-medium"
+                className="neo-btn-primary px-4 py-2.5 gap-2"
               >
-                <Github size={16} />
+                <Github size={15} />
                 Source Code
               </a>
               <motion.button
                 onClick={() => openModal(p)}
-                className="px-4 py-2.5 rounded-xl btn-secondary text-white inline-flex items-center gap-2 text-sm font-medium"
-                whileHover={{ x: 2 }}
-                whileTap={{ scale: 0.98 }}
+                className="neo-btn-secondary px-4 py-2.5 gap-2"
+                whileTap={{ scale: 0.97 }}
               >
-                <Play size={16} />
+                <Play size={15} />
                 Details
               </motion.button>
             </div>
@@ -217,7 +181,7 @@ const ProjectsSection = () => {
         ))}
       </motion.div>
 
-      {/* Enhanced Modal */}
+      {/* Modal */}
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <AnimatePresence>
           {open && (
@@ -227,92 +191,89 @@ const ProjectsSection = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md"
+                  className="fixed inset-0 z-50"
+                  style={{ background: "rgba(0,0,0,0.65)" }}
                 />
               </Dialog.Overlay>
 
               <Dialog.Content asChild>
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                  initial={{ opacity: 0, scale: 0.92, y: 32 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 40 }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="fixed z-50 w-[95vw] max-w-4xl max-h-[90vh] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-3xl overflow-hidden"
+                  exit={{ opacity: 0, scale: 0.92, y: 32 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="fixed z-50 w-[95vw] max-w-4xl max-h-[90vh] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
                   style={{
-                    background: "linear-gradient(180deg, rgba(15, 10, 40, 0.98) 0%, rgba(5, 0, 20, 0.98) 100%)",
-                    boxShadow: "0 0 100px rgba(124, 58, 237, 0.2), 0 0 60px rgba(14, 165, 233, 0.1), 0 25px 50px rgba(0, 0, 0, 0.5)",
+                    background: "var(--color-bg)",
+                    border: "2px solid var(--color-border)",
+                    boxShadow: "8px 8px 0px var(--color-shadow)",
+                    borderRadius: "12px",
                   }}
                 >
-                  {/* Decorative gradient orbs */}
-                  <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full bg-purple-500/20 blur-3xl pointer-events-none" />
-                  <div className="absolute -bottom-32 -left-32 w-64 h-64 rounded-full bg-cyan-500/20 blur-3xl pointer-events-none" />
-                  
-                  {/* Header */}
-                  <div className="relative px-6 md:px-8 py-5 border-b border-white/10">
+                  {/* Modal Header */}
+                  <div
+                    className="px-6 md:px-8 py-5"
+                    style={{ borderBottom: "2px solid var(--color-border)" }}
+                  >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <motion.div 
-                            className="p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 ring-1 ring-white/10"
-                            initial={{ rotate: -10, scale: 0 }}
-                            animate={{ rotate: 0, scale: 1 }}
-                            transition={{ delay: 0.2, type: "spring" }}
-                          >
-                            <Code2 size={20} className="text-cyan-400" />
-                          </motion.div>
+                          <div className="neo-btn-icon p-2" style={{ cursor: "default" }}>
+                            <Code2 size={18} style={{ color: "var(--color-accent)" }} />
+                          </div>
                           <Dialog.Title asChild>
-                            <motion.h3 
-                              className="text-2xl md:text-3xl font-bold"
-                              initial={{ opacity: 0, x: -20 }}
+                            <motion.h3
+                              className="text-2xl md:text-3xl font-black"
+                              style={{ color: "var(--color-text-primary)" }}
+                              initial={{ opacity: 0, x: -16 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.1 }}
                             >
-                              <span className="gradient-text-animated">{selected?.name ?? "Project"}</span>
+                              {selected?.name ?? "Project"}
                             </motion.h3>
                           </Dialog.Title>
                         </div>
-                        
                         {selected?.summary && (
-                          <motion.p 
-                            className="text-white/60 text-sm md:text-base max-w-2xl"
+                          <motion.p
+                            className="text-sm max-w-2xl"
+                            style={{ color: "var(--color-text-secondary)" }}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2 }}
+                            transition={{ delay: 0.15 }}
                           >
                             {selected.summary}
                           </motion.p>
                         )}
                       </div>
-                      
+
                       <Dialog.Close asChild>
                         <motion.button
-                          className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 ring-1 ring-white/10 hover:ring-white/20 transition-all"
+                          className="neo-btn-icon p-2.5 shrink-0"
                           aria-label="Close"
-                          whileHover={{ scale: 1.05, rotate: 90 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <X size={20} />
+                          <X size={18} />
                         </motion.button>
                       </Dialog.Close>
                     </div>
-                    
-                    {/* Quick action buttons */}
-                    <motion.div 
-                      className="flex items-center gap-3 mt-4"
-                      initial={{ opacity: 0, y: 10 }}
+
+                    {/* Quick links */}
+                    <motion.div
+                      className="flex items-center gap-2.5 mt-4"
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
+                      transition={{ delay: 0.2 }}
                     >
                       {selected?.github && (
                         <a
                           href={selected.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 ring-1 ring-white/10 text-sm font-medium transition-all"
+                          className="neo-btn-secondary px-4 py-2 gap-2 text-xs"
                         >
-                          <Github size={16} />
-                          <span>View Code</span>
-                          <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" />
+                          <Github size={14} />
+                          View Code
+                          <ArrowUpRight size={12} />
                         </a>
                       )}
                       {selected?.live && (
@@ -320,79 +281,98 @@ const ProjectsSection = () => {
                           href={selected.live}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500/20 to-purple-500/20 hover:from-cyan-500/30 hover:to-purple-500/30 ring-1 ring-cyan-400/30 text-sm font-medium transition-all"
+                          className="neo-btn-primary px-4 py-2 gap-2 text-xs"
                         >
-                          <Monitor size={16} className="text-cyan-400" />
-                          <span>Live Demo</span>
-                          <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" />
+                          <Monitor size={14} />
+                          Live Demo
+                          <ArrowUpRight size={12} />
                         </a>
                       )}
                     </motion.div>
                   </div>
 
-                  {/* Content */}
-                  <div className="relative px-6 md:px-8 py-6 max-h-[calc(90vh-200px)] overflow-y-auto custom-scrollbar">
-                    <motion.div 
-                      className="space-y-8"
+                  {/* Modal Content */}
+                  <div className="px-6 md:px-8 py-6 max-h-[calc(90vh-200px)] overflow-y-auto">
+                    <motion.div
+                      className="space-y-7"
                       initial="hidden"
                       animate="visible"
                     >
-                      {/* Overview Section */}
+                      {/* Overview */}
                       {selected?.description && (
                         <motion.div custom={0} variants={modalContentVariants}>
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="p-1.5 rounded-lg bg-blue-500/20">
-                              <Layers size={16} className="text-blue-400" />
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="neo-btn-icon p-1.5" style={{ cursor: "default" }}>
+                              <Layers size={14} style={{ color: "var(--color-accent)" }} />
                             </div>
-                            <h4 className="text-lg font-semibold text-blue-300">Project Overview</h4>
+                            <h4 className="neo-section-heading text-base font-bold">
+                              Project Overview
+                            </h4>
                           </div>
-                          <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-purple-500/5 ring-1 ring-white/10">
-                            <p className="text-white/80 leading-relaxed whitespace-pre-wrap">
+                          <div className="neo-card p-5">
+                            <p
+                              className="text-sm leading-relaxed whitespace-pre-wrap"
+                              style={{ color: "var(--color-text-secondary)" }}
+                            >
                               {selected.description}
                             </p>
                           </div>
                         </motion.div>
                       )}
 
-                      {/* Key Features Grid */}
+                      {/* Key Features */}
                       {selected?.highlights?.length > 0 && (
                         <motion.div custom={1} variants={modalContentVariants}>
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="p-1.5 rounded-lg bg-emerald-500/20">
-                              <Sparkles size={16} className="text-emerald-400" />
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="neo-btn-icon p-1.5" style={{ cursor: "default" }}>
+                              <Sparkles size={14} style={{ color: "var(--color-accent)" }} />
                             </div>
-                            <h4 className="text-lg font-semibold text-emerald-300">Key Features</h4>
+                            <h4 className="neo-section-heading text-base font-bold">
+                              Key Features
+                            </h4>
                           </div>
                           <div className="grid md:grid-cols-2 gap-3">
                             {selected.highlights.map((item, i) => (
                               <motion.div
                                 key={i}
-                                custom={1 + i * 0.1}
+                                custom={1 + i * 0.08}
                                 variants={modalContentVariants}
-                                className="group flex items-start gap-3 p-4 rounded-xl bg-white/5 ring-1 ring-white/10 hover:ring-emerald-500/30 hover:bg-white/10 transition-all"
-                                whileHover={{ x: 4 }}
+                                className="neo-card p-4 flex items-start gap-3"
                               >
-                                <div className="p-1.5 rounded-lg bg-emerald-500/20 flex-shrink-0 mt-0.5">
-                                  <ChevronRight size={14} className="text-emerald-400" />
+                                <div className="shrink-0 mt-0.5">
+                                  <ChevronRight
+                                    size={14}
+                                    style={{ color: "var(--color-accent)" }}
+                                  />
                                 </div>
-                                <span className="text-white/80 text-sm leading-relaxed">{item}</span>
+                                <span
+                                  className="text-sm leading-relaxed"
+                                  style={{ color: "var(--color-text-secondary)" }}
+                                >
+                                  {item}
+                                </span>
                               </motion.div>
                             ))}
                           </div>
                         </motion.div>
                       )}
 
-                      {/* Impact Section */}
+                      {/* Impact */}
                       {selected?.impact && (
                         <motion.div custom={2} variants={modalContentVariants}>
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="p-1.5 rounded-lg bg-pink-500/20">
-                              <Target size={16} className="text-pink-400" />
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="neo-btn-icon p-1.5" style={{ cursor: "default" }}>
+                              <Target size={14} style={{ color: "var(--color-accent-amber)" }} />
                             </div>
-                            <h4 className="text-lg font-semibold text-pink-300">Impact & Results</h4>
+                            <h4 className="neo-section-heading text-base font-bold">
+                              Impact & Results
+                            </h4>
                           </div>
-                          <div className="p-5 rounded-2xl bg-gradient-to-br from-pink-500/10 to-purple-500/5 ring-1 ring-pink-500/20">
-                            <p className="text-white/80 leading-relaxed">
+                          <div className="neo-card p-5">
+                            <p
+                              className="text-sm leading-relaxed"
+                              style={{ color: "var(--color-text-secondary)" }}
+                            >
                               {selected.impact}
                             </p>
                           </div>
@@ -402,18 +382,18 @@ const ProjectsSection = () => {
                       {/* Tech Stack */}
                       {selected?.tools?.length > 0 && (
                         <motion.div custom={3} variants={modalContentVariants}>
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="p-1.5 rounded-lg bg-purple-500/20">
-                              <Zap size={16} className="text-purple-400" />
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="neo-btn-icon p-1.5" style={{ cursor: "default" }}>
+                              <Zap size={14} style={{ color: "var(--color-accent)" }} />
                             </div>
-                            <h4 className="text-lg font-semibold text-purple-300">Tech Stack</h4>
+                            <h4 className="neo-section-heading text-base font-bold">
+                              Tech Stack
+                            </h4>
                           </div>
-                          <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/5 ring-1 ring-white/10">
+                          <div className="neo-card p-5">
                             <div className="flex flex-wrap gap-2">
                               {selected.tools.map((t, i) => (
-                                <TechBadge key={i} variant={i < 3 ? "highlight" : "default"}>
-                                  {t}
-                                </TechBadge>
+                                <span key={i} className="neo-chip">{t}</span>
                               ))}
                             </div>
                           </div>
@@ -423,14 +403,21 @@ const ProjectsSection = () => {
                       {/* Video Demo */}
                       {selected?.video && (
                         <motion.div custom={4} variants={modalContentVariants}>
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="p-1.5 rounded-lg bg-amber-500/20">
-                              <Play size={16} className="text-amber-400" />
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="neo-btn-icon p-1.5" style={{ cursor: "default" }}>
+                              <Play size={14} style={{ color: "var(--color-accent-amber)" }} />
                             </div>
-                            <h4 className="text-lg font-semibold text-amber-300">Demo Video</h4>
+                            <h4 className="neo-section-heading text-base font-bold">
+                              Demo Video
+                            </h4>
                           </div>
-                          <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 bg-black/40">
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none z-10" />
+                          <div
+                            className="overflow-hidden"
+                            style={{
+                              border: "2px solid var(--color-border)",
+                              borderRadius: "8px",
+                            }}
+                          >
                             <div className="w-full aspect-video">
                               <iframe
                                 className="w-full h-full"
@@ -446,33 +433,36 @@ const ProjectsSection = () => {
                     </motion.div>
                   </div>
 
-                  {/* Footer */}
-                  <motion.div 
-                    className="relative px-6 md:px-8 py-4 border-t border-white/10 bg-black/20"
-                    initial={{ opacity: 0, y: 20 }}
+                  {/* Modal Footer */}
+                  <motion.div
+                    className="px-6 md:px-8 py-4 flex items-center justify-between"
+                    style={{
+                      borderTop: "2px solid var(--color-border)",
+                      background: "var(--color-bg-subtle)",
+                    }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
+                    transition={{ delay: 0.3 }}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-white/40 text-sm">
-                        <FolderGit2 size={16} />
-                        <span>Explore the full project</span>
-                      </div>
-                      {selected?.github && (
-                        <motion.a
-                          href={selected.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl btn-primary text-white text-sm font-medium"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <Github size={16} />
-                          View Repository
-                          <ArrowUpRight size={14} />
-                        </motion.a>
-                      )}
+                    <div
+                      className="flex items-center gap-2 text-sm"
+                      style={{ color: "var(--color-text-secondary)" }}
+                    >
+                      <FolderGit2 size={15} />
+                      <span>Explore the full project</span>
                     </div>
+                    {selected?.github && (
+                      <a
+                        href={selected.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="neo-btn-primary px-5 py-2.5 gap-2 text-sm"
+                      >
+                        <Github size={15} />
+                        View Repository
+                        <ArrowUpRight size={13} />
+                      </a>
+                    )}
                   </motion.div>
                 </motion.div>
               </Dialog.Content>
@@ -480,24 +470,6 @@ const ProjectsSection = () => {
           )}
         </AnimatePresence>
       </Dialog.Root>
-
-      {/* Custom scrollbar styles for modal */}
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #7c3aed, #0ea5e9);
-          border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #8b5cf6, #22d3ee);
-        }
-      `}</style>
     </motion.section>
   );
 };
