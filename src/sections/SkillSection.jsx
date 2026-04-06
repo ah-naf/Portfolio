@@ -1,6 +1,7 @@
 import { Star, Code2, Monitor, Database, Settings, Layers } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { skills } from "../data/portfolioData";
+import PixelSprite from "../components/PixelSprite";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -56,11 +57,14 @@ const SkillsSection = () => {
       variants={containerVariants}
     >
       {/* Heading */}
-      <motion.div variants={cardVariants} className="mb-8">
+      <motion.div variants={cardVariants} className="mb-8 flex items-center justify-between gap-3">
         <h2 className="neo-section-heading text-2xl md:text-3xl flex items-center gap-3">
           <Star size={22} style={{ color: "var(--color-accent)" }} />
           Technical Skills
         </h2>
+        <div className="hidden sm:block">
+          <PixelSprite size={40} anim="wiggle" />
+        </div>
       </motion.div>
 
       {/* Skills grid */}

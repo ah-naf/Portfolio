@@ -1,6 +1,7 @@
 import { Mail, Linkedin, Github, BookOpen, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { profile } from "../data/portfolioData";
+import PixelSprite from "../components/PixelSprite";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -61,8 +62,11 @@ const ContactSection = () => {
       variants={containerVariants}
     >
       {/* Heading */}
-      <motion.div variants={cardVariants} className="mb-3">
+      <motion.div variants={cardVariants} className="mb-3 flex items-center justify-between gap-3">
         <h2 className="neo-section-heading text-2xl md:text-3xl">Get In Touch</h2>
+        <div className="hidden sm:block">
+          <PixelSprite size={40} anim="bob" />
+        </div>
       </motion.div>
       <motion.p
         variants={cardVariants}
@@ -115,7 +119,7 @@ const ContactSection = () => {
       </motion.div>
 
       {/* Email CTA */}
-      <motion.div variants={cardVariants} className="neo-card p-7 text-center">
+      <motion.div variants={cardVariants} className="neo-card p-7 text-center relative overflow-hidden">
         <p
           className="font-semibold mb-5 text-base"
           style={{ color: "var(--color-text-primary)" }}

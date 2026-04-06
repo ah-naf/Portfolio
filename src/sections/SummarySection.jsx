@@ -15,6 +15,7 @@ import {
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { motion, useReducedMotion } from "framer-motion";
 import { competitiveProfiles, experienceData } from "../data/portfolioData";
+import PixelSprite from "../components/PixelSprite";
 
 const RESUME_URL = "https://ah-naf.github.io/Portfolio/Ahnaf_Hasan_Shifat.pdf";
 
@@ -76,12 +77,12 @@ const SummarySection = ({ setActiveTab, scrollToSection }) => {
       variants={containerVariants}
     >
       {/* Section heading */}
-      <motion.h2
-        variants={cardVariants}
-        className="neo-section-heading text-2xl md:text-3xl mb-8"
-      >
-        About
-      </motion.h2>
+      <motion.div variants={cardVariants} className="mb-8 flex items-center justify-between gap-3">
+        <h2 className="neo-section-heading text-2xl md:text-3xl">About</h2>
+        <div className="hidden sm:flex items-end gap-1">
+          <PixelSprite size={42} anim="bob" />
+        </div>
+      </motion.div>
 
       <div className="grid xl:grid-cols-3 gap-6">
         {/* Left: About + Current Job + Quick Stats + Currently working */}

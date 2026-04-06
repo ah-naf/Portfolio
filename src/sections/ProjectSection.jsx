@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { projects } from "../data/portfolioData";
+import PixelSprite from "../components/PixelSprite";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -71,11 +72,14 @@ const ProjectsSection = () => {
       variants={containerVariants}
     >
       {/* Heading */}
-      <motion.div variants={cardVariants} className="mb-8">
+      <motion.div variants={cardVariants} className="mb-8 flex items-center justify-between gap-3">
         <h2 className="neo-section-heading text-2xl md:text-3xl flex items-center gap-3">
           <FolderGit2 size={22} style={{ color: "var(--color-accent)" }} />
           Projects
         </h2>
+        <div className="hidden sm:block">
+          <PixelSprite size={44} anim="float" />
+        </div>
       </motion.div>
 
       {/* Bento Grid */}
@@ -84,7 +88,7 @@ const ProjectsSection = () => {
           <motion.div
             key={`${p.name}-${idx}`}
             variants={cardVariants}
-            className={`neo-card p-6 group ${idx === 0 ? "md:col-span-2" : ""}`}
+            className={`neo-card p-6 group relative overflow-hidden ${idx === 0 ? "md:col-span-2" : ""}`}
             whileHover={prefersReducedMotion ? undefined : { y: -2 }}
           >
             <div className="flex items-start justify-between mb-4">
