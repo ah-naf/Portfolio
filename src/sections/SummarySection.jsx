@@ -62,7 +62,7 @@ const cardVariants = {
   },
 };
 
-const SummarySection = ({ setActiveTab }) => {
+const SummarySection = ({ setActiveTab, scrollToSection }) => {
   const { totalSolvedAllOJ, codeforces, codechef } = competitiveProfiles;
   const tech = ["Go", "React", "Node.js", "PostgreSQL", "Docker"];
   const current = getCurrentRole(experienceData);
@@ -180,7 +180,7 @@ const SummarySection = ({ setActiveTab }) => {
             ].map((stat, i) => (
               <motion.button
                 key={i}
-                onClick={() => setActiveTab(stat.section)}
+                onClick={() => scrollToSection(stat.section)}
                 className="neo-card-interactive p-5 text-left group"
                 whileHover={prefersReducedMotion ? undefined : { y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -312,7 +312,7 @@ const SummarySection = ({ setActiveTab }) => {
               ].map((cta) => (
                 <motion.button
                   key={cta.tab}
-                  onClick={() => setActiveTab(cta.tab)}
+                  onClick={() => scrollToSection(cta.tab)}
                   className="w-full neo-btn-secondary flex items-center justify-between px-4 py-3"
                   whileTap={{ scale: 0.98 }}
                 >

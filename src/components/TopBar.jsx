@@ -23,11 +23,16 @@ const TopBar = ({ isVisible = true, theme, toggle }) => {
         {/* Left: Logo + name */}
         <div className="flex items-center gap-3">
           <div
-            className="neo-btn-icon w-9 h-9 text-xs font-black tracking-wide shrink-0"
-            style={{ cursor: "default", color: "var(--color-accent)" }}
+            className="neo-btn-icon w-9 h-9 shrink-0 overflow-hidden p-0.5"
+            style={{ cursor: "default" }}
             aria-hidden="true"
           >
-            AHS
+            <img
+              src={`${import.meta.env.BASE_URL}pixel_sprite.png`}
+              alt=""
+              className="w-full h-full object-contain"
+              style={{ imageRendering: "pixelated" }}
+            />
           </div>
           <span
             className="font-bold text-base"

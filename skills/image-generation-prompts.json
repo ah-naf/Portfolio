@@ -1,0 +1,204 @@
+{
+  "_meta": {
+    "purpose": "Generate stylized profile images for neobrutalism portfolio using subject's face as reference. Each style creates a NEW composition and pose — not a re-styled version of the reference photo.",
+    "subject_face_reference": {
+      "ethnicity": "South Asian",
+      "age": "mid-20s",
+      "hair": "short, dark, slightly wavy, natural",
+      "facial_hair": "light stubble / minimal beard",
+      "face_shape": "slightly round, friendly",
+      "skin_tone": "warm medium brown",
+      "expression_hint": "calm, confident, approachable"
+    },
+    "how_to_use": {
+      "gemini_imagen3": "Upload reference photo + use gemini_optimized prompt. Imagen 3 supports image-as-reference via the image_generation API with image_prompt field.",
+      "chatgpt_dalle3": "Describe the face in detail using chatgpt_optimized prompt. DALL-E does not accept image references — rely on the detailed face description fields.",
+      "midjourney_v6": "Use /imagine with main prompt + --cref [your_image_url] flag to lock face, then stylize freely.",
+      "stable_diffusion": "Use IP-Adapter or InstantID + ControlNet with reference image, apply the prompt as the style directive."
+    },
+    "portfolio_palette": {
+      "bg_light": "#fbfbf9",
+      "bg_dark": "#030014",
+      "accent_blue": "#2d6be4",
+      "accent_amber": "#f59e0b",
+      "border_shadow": "#1c293c"
+    }
+  },
+
+  "styles": [
+    {
+      "id": "style_01",
+      "name": "Dev at Desk — Flat Vector",
+      "vibe": "Working, focused, in-flow coding session",
+      "recommended_for": "Hero section primary image",
+      "aspect_ratio": "1:1",
+      "new_composition": "Subject seated at a minimal desk from the front, elbows on desk, slightly leaning forward, looking directly at viewer with a calm confident expression. Laptop or keyboard in front. No floral shirt — wear a plain dark navy crew-neck.",
+      "face_description": "South Asian man, mid-20s, short slightly wavy dark hair, light stubble, warm medium-brown skin, calm confident expression, looking directly at viewer.",
+      "prompts": {
+        "main": "Flat vector illustration, neobrutalism style. A South Asian man in his mid-20s with short wavy dark hair, light stubble, warm brown skin — seated at a clean minimal desk, leaning slightly forward, looking directly at camera with a calm confident expression. He wears a plain dark navy crew-neck. A laptop or keyboard sits in front of him. Style: bold 2px black outlines everywhere, zero gradients, completely flat color fills. Color palette: cobalt blue #2d6be4, amber #f59e0b, dark navy #1c293c, off-white #fbfbf9. Background is off-white with subtle 24px dot-grid pattern. Hard offset drop shadow on the figure (4px right, 4px down) in #1c293c. Poster-quality editorial illustration.",
+        "negative": "No photorealism, no gradients, no bokeh, no soft shadows, no anime, no sketch lines, do NOT copy the reference photo composition",
+        "style_tags": ["flat design", "vector portrait", "neobrutalism", "editorial", "bold outlines", "desk scene"]
+      },
+      "gemini_optimized": "Using the attached reference photo for the face likeness only — ignore the pose, background, and clothing entirely. Draw a new flat vector illustration: the person is now seated at a minimal clean desk, leaning slightly forward, looking directly at the viewer. He wears a plain dark navy crew-neck. Neobrutalism art style: 2px black outlines, zero gradients, flat fills in palette #2d6be4 / #f59e0b / #1c293c / #fbfbf9. Dot-grid background (#fbfbf9). Hard 4px offset shadow in navy. Editorial poster quality.",
+      "chatgpt_optimized": "Illustration (NOT a photo): flat vector portrait of a South Asian man, mid-20s, short wavy dark hair, light stubble, warm brown skin, calm confident expression. NEW pose: seated at a minimal desk, leaning slightly forward, looking straight at viewer. Plain dark navy crew-neck. Laptop in front. Neobrutalism style: 2px black outlines, flat fills only, no gradients. Palette: #2d6be4 blue, #f59e0b amber, #1c293c navy, #fbfbf9 cream. Dot-grid bg. Hard 4px offset shadow. Editorial quality.",
+      "midjourney_params": "--style raw --stylize 400 --ar 1:1 --cref [YOUR_PHOTO_URL] --cw 80"
+    },
+
+    {
+      "id": "style_02",
+      "name": "Speaking / Presenting — Comic Ink",
+      "vibe": "Confident, energetic, giving a talk or explaining something",
+      "recommended_for": "About section or skills card",
+      "aspect_ratio": "3:4",
+      "new_composition": "Subject standing, arms slightly open or one arm gesturing outward, slight ¾ angle, mouth slightly open mid-speech. Wearing a white button-down shirt. Background: bold solid cobalt blue block.",
+      "face_description": "South Asian man, mid-20s, short slightly wavy dark hair, light stubble, warm medium-brown skin, animated expressive face mid-speech, slight smile.",
+      "prompts": {
+        "main": "Comic book ink illustration, neobrutalism style. South Asian man, mid-20s, short wavy dark hair, light stubble, warm brown skin — standing upright, one arm gesturing outward, mouth slightly open mid-speech, confident and energetic. Wearing a crisp white button-down shirt. Background: solid cobalt blue #2d6be4 rectangle with a bold amber #f59e0b radial burst behind him. Bold 3px ink outlines, flat cel-shading in 2-3 tones, no gradients. Hard diagonal navy #1c293c shadow. Halftone dots in shadow areas. The portrait is framed in a bold comic panel border with 4px offset drop shadow. Dynamic, expressive energy.",
+        "negative": "No photorealism, no gradients, no soft lighting, no anime style, no sketchy loose lines, do NOT replicate the reference photo pose",
+        "style_tags": ["comic art", "ink illustration", "cel shading", "neobrutalism", "energetic pose", "presentation"]
+      },
+      "gemini_optimized": "Use the reference image for face likeness only. Create a new comic ink illustration: the person is now standing, one arm gesturing outward as if presenting or explaining, mouth slightly open, energetic expression. White button-down shirt. Bold cobalt blue #2d6be4 background with amber #f59e0b starburst. 3px ink outlines, flat cel-shading, halftone dots in shadows. Comic panel border with 4px navy offset shadow. No gradients. Neobrutalism aesthetic.",
+      "chatgpt_optimized": "Comic book style illustration (NOT photo): South Asian man, mid-20s, short wavy dark hair, stubble, warm brown skin. NEW pose: standing, one arm gesturing out, mid-speech, energetic. White button-down shirt. Cobalt blue #2d6be4 bg + amber #f59e0b radial burst. 3px ink outlines, flat 2-tone cel shading, halftone dot shadows. Bold panel border + 4px navy offset shadow. No gradients.",
+      "midjourney_params": "--style raw --stylize 500 --ar 3:4 --cref [YOUR_PHOTO_URL] --cw 75"
+    },
+
+    {
+      "id": "style_03",
+      "name": "Chill Thinking Pose — Risograph",
+      "vibe": "Thoughtful, creative, problem-solving",
+      "recommended_for": "Projects section or card header",
+      "aspect_ratio": "1:1",
+      "new_composition": "Subject in a relaxed sitting pose, elbow on knee, chin resting on fist (thinker pose variation), looking slightly upward and to the side. Wearing a plain olive/sage green t-shirt. Background: warm cream with bold amber geometric shapes.",
+      "face_description": "South Asian man, mid-20s, short slightly wavy dark hair, light stubble, warm medium-brown skin, thoughtful introspective expression, eyes directed upward-left.",
+      "prompts": {
+        "main": "Risograph print style illustration, neobrutalism. South Asian man, mid-20s, short wavy dark hair, light stubble, warm brown skin — seated in a relaxed thinking pose, elbow on knee, chin resting on fist, looking upward and to the side. Wearing a plain olive/sage green t-shirt. Background: cream #fbfbf9 with bold amber #f59e0b geometric blocks. Limited 3-color risograph palette: cobalt blue #2d6be4, amber #f59e0b, navy #1c293c on cream base. Slight color misregistration between layers, grainy paper texture, halftone dot shading. Bold flat silhouette shapes. Thoughtful, contemplative mood.",
+        "negative": "No photorealism, no smooth blends, no digital airbrushing, no high gloss, do NOT use the reference photo pose",
+        "style_tags": ["risograph", "screen print", "limited palette", "grain texture", "thinking pose", "neobrutalism"]
+      },
+      "gemini_optimized": "Use the attached reference for face likeness only, ignore the pose entirely. New composition: person is seated casually, elbow on knee, chin resting on fist, eyes looking up-left thoughtfully. Plain sage green t-shirt. Risograph print illustration style: 3 colors only — cobalt blue #2d6be4, amber #f59e0b, navy #1c293c — on cream #fbfbf9 base. Color misregistration effect, paper grain, halftone dot shadows. Bold flat shapes. Neobrutalism composition with geometric amber background blocks.",
+      "chatgpt_optimized": "Risograph print illustration (NOT photo): South Asian man, mid-20s, dark wavy short hair, light stubble, warm brown skin. NEW pose: seated, elbow on knee, chin on fist, eyes looking upward-left, thoughtful. Sage green t-shirt. 3-color riso palette: #2d6be4, #f59e0b, #1c293c on #fbfbf9. Misregistration effect, grain texture, halftone shading. Bold flat shapes. Geometric amber bg blocks. Neobrutalism.",
+      "midjourney_params": "--style raw --stylize 350 --ar 1:1 --cref [YOUR_PHOTO_URL] --cw 80"
+    },
+
+    {
+      "id": "style_04",
+      "name": "Casual Lean — Bold Ink Sketch",
+      "vibe": "Relaxed, personable, approachable",
+      "recommended_for": "Contact section or 'about me' bio card",
+      "aspect_ratio": "2:3",
+      "new_composition": "Subject leaning against a minimal wall or invisible surface, arms loosely crossed, relaxed posture, slight smile, ¾ angle. Wearing a plain black t-shirt. Background: large bold amber color block on one side, cream on the other.",
+      "face_description": "South Asian man, mid-20s, short slightly wavy dark hair, light stubble, warm medium-brown skin, relaxed friendly expression, soft genuine smile.",
+      "prompts": {
+        "main": "Bold editorial ink illustration, neobrutalism style. South Asian man, mid-20s, short wavy dark hair, light stubble, warm brown skin — leaning casually against a surface, arms loosely crossed, slight genuine smile, ¾ angle view. Wearing a plain black t-shirt. Background: split composition, left half bold amber #f59e0b, right half cream #fbfbf9. Bold confident ink linework (2-3px strokes), flat color fills beneath lines in cobalt blue #2d6be4, amber, navy #1c293c. No gradients. Strong intentional negative space. Typography placement space at bottom. Christoph Niemann-inspired editorial quality.",
+        "negative": "No photorealism, no watercolor, no loose sketchy lines, no anime, do NOT replicate reference photo pose or background",
+        "style_tags": ["ink illustration", "editorial", "bold linework", "neobrutalism", "casual pose", "relaxed"]
+      },
+      "gemini_optimized": "Use the reference photo for face features only. New illustration: person is now leaning against a surface, arms loosely crossed, relaxed slight smile, ¾ angle. Plain black t-shirt. Background is split: left half bold amber #f59e0b, right half cream #fbfbf9. Bold ink linework (2-3px), flat color fills (cobalt blue, amber, navy). No gradients, no photorealism. Neobrutalism editorial style. Leave space at the bottom for name typography.",
+      "chatgpt_optimized": "Editorial ink illustration (NOT photo): South Asian man, mid-20s, dark wavy hair, stubble, warm brown skin, genuine slight smile. NEW pose: leaning casually, arms loosely crossed, ¾ angle. Black t-shirt. Split background: left amber #f59e0b, right cream #fbfbf9. Bold 2-3px ink lines, flat color fills (#2d6be4 blue, #f59e0b amber, #1c293c navy). No gradients, no soft shading. Neobrutalism editorial.",
+      "midjourney_params": "--style raw --stylize 400 --ar 2:3 --cref [YOUR_PHOTO_URL] --cw 75"
+    },
+
+    {
+      "id": "style_05",
+      "name": "Upward Gaze — Brutalist Poster",
+      "vibe": "Aspirational, visionary, bold presence",
+      "recommended_for": "Hero full-width banner or resume header",
+      "aspect_ratio": "2:3",
+      "new_composition": "Subject looking upward and slightly to the right, chin slightly raised, confident heroic expression. Bust portrait. Wearing a simple white t-shirt. High-contrast flat silhouette. Diagonal bold color blocks intersecting behind.",
+      "face_description": "South Asian man, mid-20s, short slightly wavy dark hair, light stubble, warm medium-brown skin, chin raised slightly, eyes looking upward-right, strong confident expression.",
+      "prompts": {
+        "main": "Neobrutalist propaganda poster illustration. South Asian man, mid-20s, short wavy dark hair, light stubble, warm brown skin — chin raised slightly, looking upward and to the right, strong heroic expression. White t-shirt. Bold diagonal color blocks intersecting in the background: cobalt blue #2d6be4 and amber #f59e0b on cream #fbfbf9. Figure rendered as high-contrast flat shapes with minimal interior detail. Navy #1c293c for deep shadow fills. Soviet constructivist composition — strong diagonals, grid-aligned, powerful geometry. Typography space at bottom for name/title in bold Inter 800 weight. Hard geometric crop lines.",
+        "negative": "No photorealism, no soft gradients, no decorative ornaments, no anime, no painterly textures, do NOT copy the reference photo composition",
+        "style_tags": ["propaganda poster", "constructivist", "brutalist", "flat illustration", "heroic pose", "neobrutalism"]
+      },
+      "gemini_optimized": "Use the reference photo for face likeness only. New composition: the person now has their chin slightly raised, looking upward and right with a strong confident expression. White t-shirt. Neobrutalist propaganda poster style: bold diagonal cobalt blue #2d6be4 and amber #f59e0b color blocks crossing the background. Figure in high-contrast flat silhouette shapes. Navy #1c293c for shadows. Soviet constructivist grid composition. Typography space at bottom. No gradients, no photorealism.",
+      "chatgpt_optimized": "Brutalist poster illustration (NOT photo): South Asian man, mid-20s, dark wavy short hair, stubble, warm brown skin. NEW pose: chin raised, looking upward-right, heroic expression. White t-shirt. Diagonal bold background blocks: cobalt #2d6be4 and amber #f59e0b on cream. High-contrast flat figure silhouette. Navy #1c293c shadows. Constructivist grid. Typography space at bottom. No gradients.",
+      "midjourney_params": "--style raw --stylize 600 --ar 2:3 --cref [YOUR_PHOTO_URL] --cw 70"
+    },
+
+    {
+      "id": "style_06",
+      "name": "Side Profile — Geometric Low-Poly",
+      "vibe": "Technical, precise, modern developer aesthetic",
+      "recommended_for": "Skills section or decorative side panel",
+      "aspect_ratio": "1:1",
+      "new_composition": "Exact side profile (90° right-facing), clean geometric silhouette. Subject standing upright, neutral expression. Wearing a dark navy hoodie. Background: large polygon shapes in blue and amber.",
+      "face_description": "South Asian man, mid-20s, short slightly wavy dark hair, light stubble, warm medium-brown skin, neutral clean expression, side profile view showing jawline and hair profile.",
+      "prompts": {
+        "main": "Geometric low-poly portrait illustration, neobrutalism. South Asian man, mid-20s, short wavy dark hair, light stubble, warm brown skin — rendered in exact side profile (90° right-facing), upright standing pose, neutral expression. Dark navy hoodie. The face, hair, and clothing are broken into large flat triangular polygons. Each polygon has a 2px dark border. Palette: cobalt blue #2d6be4, amber #f59e0b, navy #1c293c, cream #fbfbf9, warm brown skin tones. Background: large bold polygon shapes in amber and blue. Hard offset shadow block under portrait (5px navy). No gradients inside polygons. Angular, precise, technical.",
+        "negative": "No gradients inside polygons, no smooth blending, no photorealism, no round shapes, no anime, do NOT use reference photo pose",
+        "style_tags": ["low poly", "geometric", "polygon art", "side profile", "neobrutalism", "technical"]
+      },
+      "gemini_optimized": "Use reference image for face proportions and hair shape only. New composition: exact side profile view (90 degrees, facing right), standing upright, neutral expression, dark navy hoodie. Geometric low-poly style: the entire figure and background broken into large flat-filled triangles. Each polygon outlined in 2px dark border. Palette: #2d6be4, #f59e0b, #1c293c, #fbfbf9, warm brown skin. Bold large polygon background shapes in blue and amber. 5px hard offset navy shadow. Zero gradients.",
+      "chatgpt_optimized": "Geometric low-poly illustration (NOT photo): South Asian man, mid-20s, dark wavy hair, light stubble, warm brown skin. NEW pose: exact side profile, facing right, upright, neutral expression. Dark navy hoodie. Entire figure + background = flat-filled triangular polygons, each with 2px dark outline. Palette: #2d6be4, #f59e0b, #1c293c, #fbfbf9, warm brown skin. Bold polygon bg in blue + amber. 5px navy hard shadow. No gradients.",
+      "midjourney_params": "--style raw --stylize 400 --ar 1:1 --cref [YOUR_PHOTO_URL] --cw 85"
+    },
+
+    {
+      "id": "style_07",
+      "name": "Waving Hello — Sticker Character",
+      "vibe": "Friendly, welcoming, interactive element",
+      "recommended_for": "404 page, welcome screen, or cursor follow Easter egg",
+      "aspect_ratio": "1:1",
+      "new_composition": "Full-body character standing, one arm raised waving (hello gesture), bright friendly grin, slightly turned toward viewer. Wearing a plain yellow/amber t-shirt and dark pants. Character is self-contained with a sticker die-cut white border.",
+      "face_description": "South Asian man, mid-20s, short slightly wavy dark hair, light stubble, warm medium-brown skin, wide friendly grin, eyes slightly squinting with smile.",
+      "prompts": {
+        "main": "Flat character sticker illustration, neobrutalism style. South Asian man, mid-20s, short wavy dark hair, light stubble, warm brown skin — full-body standing character, one arm raised in a big friendly wave, wide grin, slightly angled toward viewer. Wearing an amber #f59e0b t-shirt and dark navy #1c293c pants. Bold 3px black outlines everywhere. Thick white die-cut sticker border around the entire character. Flat color fills, zero gradients. Hard 3px offset navy drop shadow on the character. Transparent background (sticker format). Fun, expressive, consistent with neobrutalism palette: #2d6be4, #f59e0b, #1c293c, #fbfbf9.",
+        "negative": "No gradients, no photorealism, no complex background, no anime style, no soft shading, do NOT replicate the reference photo",
+        "style_tags": ["sticker art", "character design", "flat illustration", "full body", "wave pose", "neobrutalism"]
+      },
+      "gemini_optimized": "Use the reference photo for face proportions only. Create a new full-body sticker character: person is standing, one arm raised waving hello, wide friendly grin. Amber #f59e0b t-shirt, dark navy #1c293c pants. Sticker style: thick 3px black outlines, white die-cut border around the whole character, flat color fills, no gradients. Hard 3px navy offset shadow. Transparent/white background. Palette: #2d6be4, #f59e0b, #1c293c, #fbfbf9, warm brown skin. Fun, expressive.",
+      "chatgpt_optimized": "Flat sticker illustration (NOT photo), transparent background: South Asian man, mid-20s, dark wavy hair, light stubble, warm brown skin, wide friendly grin. NEW full-body pose: standing, one arm raised in friendly wave. Amber t-shirt #f59e0b, dark navy pants #1c293c. Bold 3px black outlines, white die-cut sticker border, flat fills, no gradients. 3px hard navy offset shadow. Neobrutalism palette.",
+      "midjourney_params": "--style raw --stylize 450 --ar 1:1 --cref [YOUR_PHOTO_URL] --cw 80 --no background"
+    },
+
+    {
+      "id": "style_08",
+      "name": "Pixel Art Sprite — Front Facing",
+      "vibe": "Retro, playful, developer Easter egg",
+      "recommended_for": "Loading screen, 404 page, Konami code trigger, footer Easter egg",
+      "aspect_ratio": "1:1",
+      "resolution_note": "64x64 pixel grid, generate large then request nearest-neighbor downscale",
+      "new_composition": "Front-facing RPG sprite character, neutral idle stance, arms slightly away from body. Wearing a cobalt blue hoodie. Small amber badge/star pixel in top corner.",
+      "face_description": "South Asian man, mid-20s, short dark hair, minimal pixel stubble, warm brown skin tone, small pixel smile expression.",
+      "prompts": {
+        "main": "64x64 pixel art sprite, no anti-aliasing. South Asian man, mid-20s, short dark hair, small pixel stubble, warm brown skin — front-facing RPG character idle pose, arms slightly away from body, neutral friendly expression, small pixel smile. Cobalt blue #2d6be4 hoodie, dark pants. 1-pixel black outline around the entire figure. Small amber #f59e0b pixel star or badge in top-right corner. Solid cream #fbfbf9 or cobalt background. Hard pixel edges only. Warm brown skin tone (#8b5e3c range). Classic 16-bit RPG game sprite aesthetic. Neobrutalism palette.",
+        "negative": "No anti-aliasing, no smooth gradients, no sub-pixel rendering, no photorealism, no 3D shading, no anime",
+        "style_tags": ["pixel art", "8-bit", "16-bit sprite", "RPG character", "idle pose", "neobrutalism palette"]
+      },
+      "gemini_optimized": "Use the reference image for face features and hair shape to inform the pixel character. Create a 64x64 pixel art sprite: front-facing RPG idle stance, arms slightly out, small friendly pixel smile. Cobalt blue #2d6be4 hoodie, dark pants. 1px black outline around figure. Small amber pixel badge top-right. Cream background. Warm brown skin (#8b5e3c). Hard pixel edges, zero anti-aliasing. Palette: #2d6be4, #f59e0b, #1c293c, #fbfbf9, warm brown. Classic RPG sprite.",
+      "chatgpt_optimized": "64x64 pixel art sprite (NOT photo, NO anti-aliasing): South Asian man, mid-20s, short dark hair, pixel stubble, warm brown skin (~#8b5e3c). Front-facing RPG idle pose, arms slightly out, small pixel smile. Cobalt blue hoodie #2d6be4, dark pants. 1px black outline. Amber pixel badge top-right. Cream background. Hard pixel edges only. Neobrutalism palette. 16-bit RPG character style.",
+      "midjourney_params": "--style raw --stylize 200 --ar 1:1 --cref [YOUR_PHOTO_URL] --cw 90 pixel art 64x64 sprite"
+    }
+  ],
+
+  "animation_guidelines": {
+    "note": "Apply these Framer Motion values to whichever style you choose in the portfolio",
+    "entrance": {
+      "initial": { "opacity": 0, "y": 20, "scale": 0.97 },
+      "animate": { "opacity": 1, "y": 0, "scale": 1 },
+      "transition": { "duration": 0.5, "ease": [0.22, 1, 0.36, 1] }
+    },
+    "float_loop": {
+      "animate": { "y": [-4, 0, -4] },
+      "transition": { "duration": 3, "repeat": "Infinity", "ease": "easeInOut" }
+    },
+    "neo_shadow_hover": {
+      "default_shadow": "4px 4px 0px #1c293c",
+      "hover_shadow": "6px 6px 0px #1c293c",
+      "hover_transform": "translate(-2px, -2px)",
+      "transition": "transform 120ms ease, box-shadow 120ms ease"
+    }
+  },
+
+  "quick_reference": {
+    "hero_section": "style_01 (Dev at Desk) or style_05 (Upward Gaze Poster)",
+    "about_or_bio_card": "style_04 (Casual Lean)",
+    "projects_section": "style_03 (Thinking Pose Riso)",
+    "skills_sidebar": "style_06 (Side Profile Low-Poly)",
+    "speaking_or_talks": "style_02 (Presenting Comic)",
+    "dark_mode_hero": "style_02 (Comic Ink — bold outlines shine on #030014)",
+    "easter_egg_pixel": "style_08 (Pixel Sprite) — trigger via Konami code",
+    "welcome_or_404": "style_07 (Waving Sticker)"
+  }
+}

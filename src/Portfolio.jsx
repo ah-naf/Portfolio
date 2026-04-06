@@ -126,7 +126,7 @@ const Portfolio = () => {
             viewport={{ once: true, amount: 0.05 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
-            {tab.id === "about"       && <SummarySection setActiveTab={setActiveTab} />}
+            {tab.id === "about"       && <SummarySection setActiveTab={setActiveTab} scrollToSection={scrollToSection} />}
             {tab.id === "experience"  && <ExperienceSection />}
             {tab.id === "projects"    && <ProjectsSection />}
             {tab.id === "skills"      && <SkillsSection />}

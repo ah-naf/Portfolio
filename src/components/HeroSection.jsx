@@ -146,6 +146,7 @@ const HeroSection = () => {
                 Resume
               </a>
             </motion.div>
+
           </motion.div>
 
           {/* RIGHT: Current role card */}
@@ -154,8 +155,31 @@ const HeroSection = () => {
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="flex justify-center lg:justify-end"
+              className="flex flex-col items-center lg:items-end gap-5"
             >
+              {/* Sticker character card */}
+              <div
+                style={{
+                  background: "var(--color-accent-amber)",
+                  border: "2px solid var(--color-border)",
+                  boxShadow: "6px 6px 0px var(--color-shadow)",
+                  borderRadius: "12px",
+                  padding: "20px 28px 0",
+                  overflow: "hidden",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                  width: "100%",
+                  maxWidth: "24rem",
+                }}
+              >
+                <img
+                  src={`${import.meta.env.BASE_URL}sticker.png`}
+                  alt="Ahnaf waving"
+                  style={{ width: "180px", display: "block" }}
+                />
+              </div>
+
               <div
                 className="neo-card-accent p-7 w-full max-w-sm"
               >
